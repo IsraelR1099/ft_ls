@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/24 11:41:57 by irifarac         ###   ########.fr       */
+/*   Created: 2024/06/24 11:29:26 by irifarac          #+#    #+#             */
+/*   Updated: 2024/06/24 11:31:25 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LS_H
-# define FT_LS_H
+#include "../inc/ft_ls.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <sys/stat.h>
-# include <stdlib.h>
+int	main(int argc, char **argv)
+{
+	int	i;
 
-
-//Utils
-int	ft_find(char **pstr, char *estr, char *tokens);
-
-#endif
+	i = 0;
+	while (i++ < argc)
+		printf("hola argc: %d and argv[i]: %s\n", argc, argv[i]);
+	return (0);
+}
