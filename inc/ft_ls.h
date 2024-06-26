@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/26 10:17:26 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:57:29 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct flags
 	bool			sort_time;		/* -t */
 	bool			print_owner;	/* -g */
 	bool			no_sort;		/* -f */
-	bool			list_direc
+	bool			list_direc;
 	enum e_time_type	time_type;
 }	t_flags;
 
@@ -73,4 +73,5 @@ typedef struct fileinfo
 //Utils
 int	ft_find(char **pstr, char *estr, char *tokens);
 size_t	ft_strlen(const char *str);
+void	*ft_memset(void *dest, int ch, size_t count);
 #endif

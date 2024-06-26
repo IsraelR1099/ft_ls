@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/26 09:53:18 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:56:45 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,21 @@ static char	*ft_strchr(const char *str, int ch)
 	if (str[position] == (char)ch)
 		return ((char *)str + position);
 	return (NULL);
+}
+
+void	*ft_memset(void	*dest, int ch, size_t count)
+{
+	unsigned int	position;
+	char			*new_dest;
+
+	new_dest = (char *)dest;
+	position = 0;
+	while (position < count)
+	{
+		new_dest[position] = (char)ch;
+		position++;
+	}
+	return (new_dest);
 }
 
 size_t	ft_strlen(const char *str)
