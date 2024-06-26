@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/25 18:58:06 by israel           ###   ########.fr       */
+/*   Updated: 2024/06/26 10:17:26 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 //Structs
 
-enum filetype
+enum e_filetype
 {
 	ft_unknown,
 	ft_fifo,
@@ -33,24 +33,44 @@ enum filetype
 	ft_sock,
 	ft_wht
 };
+
+enum	e_time_type
+{
+	time_mtime,		/* default */
+	time_atime,		/* -u */
+	time_numtypes	/* number of elements of this enum */
+};
 /* name: name of the file
  * linkname: Symlink name, name of the file linked to, otherwise NULL
  * filetype: type of file
  * linkok: For symbolic link and color printing, true if the link is valid
  * linkmode: file mode for for symbolic link, st_mode of the file linked to
  */
-typedef struct	fileinfo
+typedef struct flags
+{
+	bool			long_format;	/* -l */
+	bool			recurs;			/* -R */
+	bool			hiden_files;	/* -a */
+	bool			reverse;		/* -r */
+	bool			sort_time;		/* -t */
+	bool			print_owner;	/* -g */
+	bool			no_sort;		/* -f */
+	bool			list_direc
+	enum e_time_type	time_type;
+}	t_flags;
+
+typedef struct fileinfo
 {
 	char		*name;
 	char		*linkname;
-	enum filetype	filetype;
+	enum e_filetype	filetype;
 	struct stat	stat;
+	t_flags		flags;
 	bool		linkok;
 	mode_t		linkmode;
-}		t_fileinfo;
 
+}		t_fileinfo;
 //Utils
 int	ft_find(char **pstr, char *estr, char *tokens);
 size_t	ft_strlen(const char *str);
-
 #endif

@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/25 18:27:01 by israel           ###   ########.fr       */
+/*   Updated: 2024/06/26 09:53:18 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*ft_strchr(const char *str, int ch)
 	return (NULL);
 }
 
-size_t ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
