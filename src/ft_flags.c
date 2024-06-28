@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/06/27 18:40:08 by israel           ###   ########.fr       */
+/*   Updated: 2024/06/28 09:47:26 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 	}
 }
 
-void ft_parse_flags(int argc, char **argv, t_flags *flags)
+void	ft_parse_flags(int argc, char **argv, t_flags *flags)
 {
 	int	i;
 	int	j;

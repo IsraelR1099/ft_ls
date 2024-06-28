@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/26 12:56:45 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/06/28 10:03:56 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,15 @@ int	ft_find(char **pstr, char *estr, char *tokens)
 		tmp++;
 	*pstr = tmp;
 	return (*tmp && ft_strchr(tokens, *tmp));
+}
+
+bool	ft_file_flag(const char *argv)
+{
+	char	*etmp;
+
+	etmp = argv + ft_strlen(argv);
+	while (*argv)
+	{
+		
+	}
 }
