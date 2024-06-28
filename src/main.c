@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:29:26 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/27 18:40:23 by israel           ###   ########.fr       */
+/*   Updated: 2024/06/28 13:09:33 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,15 @@
 int	main(int argc, char **argv)
 {
 	t_flags		flags;
+	t_fileinfo	*files;
 
 	ft_memset(&flags, 0, sizeof(t_flags));
-	ft_parse_flags(argc, argv, &flags);
-	//printf("name es %s\n", file.name);
+	files = ft_parse(argc, argv, &flags);
+	while (files)
+	{
+		printf("file name: %s\n", files->name);
+		files = files->next;
+	}
 	printf("long_format es %d\n", flags.long_format);
 	printf("recurs es %d\n", flags.recurs);
 	printf("hiden_files es %d\n", flags.hiden_files);

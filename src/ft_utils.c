@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/28 10:03:56 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/06/28 12:02:49 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,25 @@ int	ft_find(char **pstr, char *estr, char *tokens)
 	return (*tmp && ft_strchr(tokens, *tmp));
 }
 
-bool	ft_file_flag(const char *argv)
+enum e_valid	ft_flags(const char *argv)
 {
 	char	*etmp;
+	char	*tmp;
 
-	etmp = argv + ft_strlen(argv);
-	while (*argv)
+	if (!ft_strchr(argv, '-'))
+		return (file);
+	tmp = (char *)argv;
+	etmp = (char *)argv + ft_strlen(argv);
+	while (tmp < etmp)
 	{
-		
+		if (*tmp == '-')
+		{
+			if (*argv == '-' && (tmp - argv) > 0)
+				return (not_valid_flag);
+			if (*argv != '-' && (tmp - argv) > 0)
+				return (file);
+		}
+		tmp++;
 	}
+	return (valid_flag);
 }

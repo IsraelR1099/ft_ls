@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/27 18:46:32 by israel           ###   ########.fr       */
+/*   Updated: 2024/06/28 13:11:24 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ enum e_filetype
 	ft_lnk,
 	ft_sock,
 	ft_wht
+};
+
+enum	e_valid
+{
+	valid_flag,
+	not_valid_flag,
+	file
 };
 
 enum	e_time_type
@@ -61,17 +68,18 @@ typedef struct flags
 
 typedef struct fileinfo
 {
-	const char	*name;
-	char		*linkname;
+	const char		*name;
+	char			*linkname;
 	enum e_filetype	filetype;
-	struct stat	stat;
-	bool		linkok;
-	mode_t		linkmode;
-
+	struct stat		stat;
+	bool			linkok;
+	mode_t			linkmode;
+	struct fileinfo	*next;
 }		t_fileinfo;
 
 // Flags
-void	ft_parse_flags(int argc, char **argv, t_flags *flags);
+t_fileinfo		*ft_parse(int argc, char **argv, t_flags *flags);
+enum e_valid	ft_flags(const char *argv);
 
 //Utils
 int		ft_find(char **pstr, char *estr, char *tokens);
