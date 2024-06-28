@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/24 10:05:59 by irifarac          #+#    #+#              #
-#    Updated: 2024/06/24 11:22:33 by irifarac         ###   ########.fr        #
+#    Updated: 2024/06/27 18:40:42 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ SRCDIR = ./
 # Files
 
 SRC = src/main.c \
-	  src/ft_utils.c
+	  src/ft_utils.c \
+	  src/ft_build.c \
+	  src/ft_flags.c
 
 OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
 DEP = $(patsubst %.c, %.d, $(SRC))
