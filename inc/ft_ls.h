@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/06/28 13:11:24 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/01 20:33:43 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <sys/stat.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <stdint.h>
+# include <stdarg.h>
 
 //Structs
 

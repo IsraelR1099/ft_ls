@@ -5,60 +5,56 @@
 #                                                     +:+ +:+         +:+      #
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/06/24 10:05:59 by irifarac          #+#    #+#              #
-#    Updated: 2024/07/02 20:18:33 by israel           ###   ########.fr        #
+#    Created: 2022/03/07 09:34:40 by irifarac          #+#    #+#              #
+#    Updated: 2024/05/13 20:45:02 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Colours
-RED := $(shell tput setaf 1)
-GREEN := $(shell tput setaf 2)
-RESET := $(shell tput sgr0)
-
-NAME := ft_ls
+NAME := libftprintf.a
+LIBFT := libft
 CFLAGS := -Wall -Wextra -Werror -MMD
-CFLAGS += -g
+AR := ar rcs
 
-# Folders
+SRC := src/ft_printf.c \
+	src/ft_printf_utils.c \
+	src/ft_printf_string.c \
+	src/ft_printf_number.c \
+	src/ft_printf_ptr.c
 
-OBJDIR = obj
-SRCDIR = ./
-
-# Files
-
-SRC = src/main.c \
-	  src/ft_utils.c \
-	  src/ft_build.c \
-	  src/ft_flags.c
-
-OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
-DEP = $(patsubst %.c, %.d, $(SRC))
-INC = ./inc/ft_ls.h
+OBJ := $(SRC:.c=.o)
+DEP := $(patsubst %.c,%.d,$(SRC))
+LIBFT := libft
 
 all: makelibs $(NAME)
 
 makelibs:
-	@make -C ft_printf
+	@make -C $(LIBFT)
 
 -include $(DEP)
-$(NAME): $(OBJ) $(INC)
-	@echo "$(GREEN)Creando ejecutable $@ $(RESET)"
-	gcc $(CFLAGS) $(OBJ) -o $@
-	@echo "$(GREEN)Compilado $@ $(RESET)"
+$(NAME): $(OBJ) includes/ft_printf.h libft/libft.a
+	@make -C $(LIBFT)
+	@cp libft/libft.a .
+	@mv libft.a $(NAME)
+	@$(AR) $(NAME) $(OBJ)
+	@echo "ft_printf compiled"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC)
-	@echo "$(GREEN)Compilando objeto $< $(RESET)"
-	@mkdir -p $(@D)
-	gcc $(CFLAGS) -o $@ -c $<
+%.o: %.c includes/ft_printf.h libft/src/libft.h
+	@echo "Compiling"
+	gcc $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-	rm -rf ./obj
-	@make clean -C ft_printf
+	rm -f $(OBJ)
+	rm -f $(DEP)
+	@make clean -C $(LIBFT)
+	@echo "ft_printf objets cleaned"
 
 fclean: clean
-	rm -rf $(NAME)
-	@make fclean -C ft_printf
+	@make fclean -C $(LIBFT)
+	rm -f $(NAME)
+	rm -f $(LIBFT)/libft.a
+	@echo "executable files cleaned"
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
