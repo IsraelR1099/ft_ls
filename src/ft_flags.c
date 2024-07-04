@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/06/28 13:16:27 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/04 14:11:28 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 		else if (*str_flag == 'd')
 			flags->list_direc = true;
 		else if (*str_flag != '-')
-			printf("invalid flag: %c\n", *str_flag);
+		{
+			ft_printf(1, "ft_ls: invalid option -- '%c'\n", *str_flag);
+			ft_panic(NULL);
+		}
 		str_flag++;
 	}
 }
@@ -58,7 +61,10 @@ t_fileinfo	*ft_parse(int argc, char **argv, t_flags *flags)
 		if (value == valid_flag)
 			ft_getopt(flags, argv[i]);
 		else if (value == not_valid_flag)
-			printf("not valid flag\n");
+		{
+			ft_printf(1, "ft_ls: invalid option -- '%s'\n", argv[i]);
+			ft_panic(files);
+		}
 		else if (value == file)
 		{
 			tmp->next = ft_build_fileinfo(argv[i]);

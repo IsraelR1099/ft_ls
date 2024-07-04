@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/01 20:33:43 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/04 14:06:04 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,9 @@ enum e_valid	ft_flags(const char *argv);
 int		ft_find(char **pstr, char *estr, char *tokens);
 size_t		ft_strlen(const char *str);
 void		*ft_memset(void *dest, int ch, size_t count);
+void		ft_printf(int fd, const char *fmt, ...);
 t_fileinfo	*ft_build_fileinfo(const char *name);
+
+// Error
+void ft_panic(t_fileinfo *fileinfo);
 #endif

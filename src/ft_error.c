@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_string.c                                 :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 10:04:24 by irifarac          #+#    #+#             */
-/*   Updated: 2024/05/13 20:12:51 by israel           ###   ########.fr       */
+/*   Created: 2024/07/03 21:48:46 by israel            #+#    #+#             */
+/*   Updated: 2024/07/04 14:05:25 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "../inc/ft_ls.h"
 
-int	ft_putchar(char c)
+void ft_panic(t_fileinfo *fileinfo)
 {
-	return (write(1, &c, 1));
-}
-
-int	ft_putstr(char *str)
-{
-	if (str == NULL)
-		return (write(1, "(null)", 6));
-	return (write(1, str, ft_strlen(str)));
+	if (fileinfo)
+		free(fileinfo);
+	exit(1);
 }
