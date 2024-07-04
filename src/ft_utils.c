@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/03 21:40:59 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/04 20:14:52 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,18 @@ int	ft_find(char **pstr, char *estr, char *tokens)
 		tmp++;
 	*pstr = tmp;
 	return (*tmp && ft_strchr(tokens, *tmp));
+}
+
+void ft_free_fileinfo(t_fileinfo *fileinfo)
+{
+	t_fileinfo	*tmp;
+
+	while (fileinfo != NULL)
+	{
+		tmp = fileinfo;
+		fileinfo = fileinfo->next;
+		free(tmp);
+	}
 }
 
 enum e_valid	ft_flags(const char *argv)
