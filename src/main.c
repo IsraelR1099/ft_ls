@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:29:26 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/05 11:28:34 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/05 12:53:30 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	main(int argc, char **argv)
 		printf("argv es: %s\n", argv[i]);
 	ft_memset(&flags, 0, sizeof(t_flags));
 	files = ft_parse(argc, argv, &flags);
+	ft_getinfo(&files);
 	tmp = files;
 	while (tmp)
 	{
-		printf("file name: %s\n", files->name);
+		printf("file name: %s\n", tmp->name);
 		tmp = tmp->next;
 	}
 	printf("long_format es %d\n", flags.long_format);
