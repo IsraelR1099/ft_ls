@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_flags.c                                         :+:      :+:    :+:   */
+/*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/07/05 10:36:57 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/05 11:20:50 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 			flags->no_sort = true;
 		else if (*str_flag == 'd')
 			flags->list_direc = true;
+		else if (*str_flag == 'u')
+			flags->time_type = time_atime;
 		else if (*str_flag != '-')
 		{
 			ft_printf(2, "ft_ls: invalid option -- '%c'\n", *str_flag);
