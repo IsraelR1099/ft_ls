@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/07/04 14:11:28 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/05 10:36:57 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 			flags->list_direc = true;
 		else if (*str_flag != '-')
 		{
-			ft_printf(1, "ft_ls: invalid option -- '%c'\n", *str_flag);
+			ft_printf(2, "ft_ls: invalid option -- '%c'\n", *str_flag);
 			ft_panic(NULL);
 		}
 		str_flag++;
@@ -49,11 +49,7 @@ t_fileinfo	*ft_parse(int argc, char **argv, t_flags *flags)
 	t_fileinfo	*files;
 	t_fileinfo	*tmp;
 
-	files = ft_build_fileinfo(".");
-	tmp = files;
-	if (argc == 1)
-		return (NULL);
-	i = 1;
+	i = 0;
 	value = 0;
 	while (i < argc)
 	{
@@ -67,8 +63,16 @@ t_fileinfo	*ft_parse(int argc, char **argv, t_flags *flags)
 		}
 		else if (value == file)
 		{
-			tmp->next = ft_build_fileinfo(argv[i]);
-			tmp = tmp->next;
+			if (i == 0)
+			{
+				files = ft_build_fileinfo(argv[i]);
+				tmp = files;
+			}
+			else
+			{
+				tmp->next = ft_build_fileinfo(argv[i]);
+				tmp = tmp->next;
+			}
 		}
 		i++;
 	}

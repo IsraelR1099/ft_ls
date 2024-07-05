@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/04 20:14:52 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/05 09:39:40 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_find(char **pstr, char *estr, char *tokens)
 	return (*tmp && ft_strchr(tokens, *tmp));
 }
 
-void ft_free_fileinfo(t_fileinfo *fileinfo)
+void	ft_free_fileinfo(t_fileinfo *fileinfo)
 {
 	t_fileinfo	*tmp;
 

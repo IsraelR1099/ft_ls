@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/24 10:05:59 by irifarac          #+#    #+#              #
-#    Updated: 2024/07/04 13:51:24 by israel           ###   ########.fr        #
+#    Updated: 2024/07/05 10:50:01 by irifarac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRCDIR = ./
 SRC = src/main.c \
 	  src/ft_utils.c \
 	  src/ft_build.c \
-	  src/ft_flags.c \
+	  src/ft_parse.c \
 	  src/ft_error.c \
 	  src/ft_printf.c
 

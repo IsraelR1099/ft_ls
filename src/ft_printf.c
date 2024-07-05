@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:06:46 by israel            #+#    #+#             */
-/*   Updated: 2024/07/04 13:52:24 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/05 09:39:18 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void	ft_putchar(int fd, char c)
 void	ft_printf(int fd, const char *fmt, ...)
 {
 	char	*str;
-	int	c;
-	int	i;
-	int	state;
+	int		c;
+	int		i;
+	int		state;
 	va_list	args;
 
 	va_start(args, fmt);
