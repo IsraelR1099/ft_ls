@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/07/08 12:05:51 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:16:52 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 			flags->sort_atime = false;
 			flags->time_type = time_mtime;
 		}
+#ifdef BONUS
 		else if (*str_flag == 'g')
 		{
 			flags->print_owner = true;
@@ -51,6 +52,7 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 			flags->sort_mtime = false;
 			flags->time_type = time_atime;
 		}
+#endif
 		else if (*str_flag != '-')
 		{
 			ft_printf(2, "ft_ls: invalid option -- '%c'\n", *str_flag);

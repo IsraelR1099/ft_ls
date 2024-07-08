@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/24 10:05:59 by irifarac          #+#    #+#              #
-#    Updated: 2024/07/08 11:55:13 by irifarac         ###   ########.fr        #
+#    Updated: 2024/07/08 13:12:45 by irifarac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,10 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC)
 	@echo "$(GREEN)Compilando objeto $< $(RESET)"
 	@mkdir -p $(@D)
 	gcc $(CFLAGS) -o $@ -c $<
+
+# Bonus target
+bonus: CFLAGS += -DBONUS
+bonus: $(NAME)
 
 clean:
 	rm -rf ./obj
