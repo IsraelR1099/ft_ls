@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/07/05 11:20:50 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:05:51 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,31 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 		else if (*str_flag == 'r')
 			flags->reverse = true;
 		else if (*str_flag == 't')
-			flags->sort_time = true;
+		{
+			flags->sort_mtime = true;
+			flags->sort_atime = false;
+			flags->time_type = time_mtime;
+		}
 		else if (*str_flag == 'g')
+		{
 			flags->print_owner = true;
+			flags->long_format = true;
+		}
 		else if (*str_flag == 'f')
+		{
 			flags->no_sort = true;
+			flags->hiden_files = true;
+			if (flags->sort_mtime == false)
+				flags->reverse = false;
+		}
 		else if (*str_flag == 'd')
 			flags->list_direc = true;
 		else if (*str_flag == 'u')
+		{
+			flags->sort_atime = true;
+			flags->sort_mtime = false;
 			flags->time_type = time_atime;
+		}
 		else if (*str_flag != '-')
 		{
 			ft_printf(2, "ft_ls: invalid option -- '%c'\n", *str_flag);
@@ -53,6 +69,7 @@ t_fileinfo	*ft_parse(int argc, char **argv, t_flags *flags)
 
 	i = 0;
 	value = 0;
+	files = NULL;
 	while (i < argc)
 	{
 		value = ft_flags(argv[i]);
@@ -65,7 +82,7 @@ t_fileinfo	*ft_parse(int argc, char **argv, t_flags *flags)
 		}
 		else if (value == file)
 		{
-			if (i == 0)
+			if (!files && i != 0)
 			{
 				files = ft_build_fileinfo(argv[i]);
 				tmp = files;
@@ -78,5 +95,7 @@ t_fileinfo	*ft_parse(int argc, char **argv, t_flags *flags)
 		}
 		i++;
 	}
+	if (!files)
+		files = ft_build_fileinfo(".");
 	return (files);
 }

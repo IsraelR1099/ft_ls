@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/06 18:38:08 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/08 12:15:20 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <stdint.h>
 # include <stdarg.h>
 # include <time.h>
+# include <dirent.h>
+# include <sys/types.h>
 
 //Structs
 
@@ -50,24 +52,26 @@ enum	e_time_type
 	time_atime,		/* -u */
 	time_numtypes	/* number of elements of this enum */
 };
-/* name: name of the file
- * linkname: Symlink name, name of the file linked to, otherwise NULL
- * filetype: type of file
- * linkok: For symbolic link and color printing, true if the link is valid
- * linkmode: file mode for for symbolic link, st_mode of the file linked to
- */
 typedef struct flags
 {
 	bool			long_format;	/* -l */
 	bool			recurs;			/* -R */
 	bool			hiden_files;	/* -a */
 	bool			reverse;		/* -r */
-	bool			sort_time;		/* -t */
+	bool			sort_mtime;		/* -t */
+	bool			sort_atime;		/* -u */
 	bool			print_owner;	/* -g */
 	bool			no_sort;		/* -f */
-	bool			list_direc;	/* -d */
+	bool			list_direc;		/* -d */
 	enum e_time_type	time_type;
 }	t_flags;
+
+/* name: name of the file
+ * linkname: Symlink name, name of the file linked to, otherwise NULL
+ * filetype: type of file
+ * linkok: For symbolic link and color printing, true if the link is valid
+ * linkmode: file mode for symbolic link, st_mode of the file linked to
+ */
 
 typedef struct fileinfo
 {
@@ -86,6 +90,9 @@ enum e_valid	ft_flags(const char *argv);
 
 // Get info
 void			ft_getinfo(t_fileinfo **files);
+
+// Print data
+void			ft_print_data(t_fileinfo *files, t_flags flags);
 
 //Utils
 int				ft_find(char **pstr, char *estr, char *tokens);
