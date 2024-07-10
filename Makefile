@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/24 10:05:59 by irifarac          #+#    #+#              #
-#    Updated: 2024/07/08 13:12:45 by irifarac         ###   ########.fr        #
+#    Updated: 2024/07/10 10:33:55 by irifarac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,13 @@ SRC = src/main.c \
 
 OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
 DEP = $(patsubst %.c, %.d, $(SRC))
-INC = ./inc/ft_ls.h
+INC = ./inc/ft_ls.h ./ft_printf/includes/ft_printf.h
+INC += ./ft_printf/libft/src/libft.h
 
-all: $(NAME)
+all: makelibs $(NAME)
 
+makelibs:
+	@$(MAKE) -C ft_printf
 
 -include $(DEP)
 $(NAME): $(OBJ) $(INC)
@@ -59,9 +62,11 @@ bonus: $(NAME)
 
 clean:
 	rm -rf ./obj
+	@make clean -C ft_printf
 
 fclean: clean
 	rm -rf $(NAME)
+	@make fclean -C ft_printf
 
 re: fclean all
 
