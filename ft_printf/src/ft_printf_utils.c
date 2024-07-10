@@ -6,21 +6,11 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 10:07:43 by irifarac          #+#    #+#             */
-/*   Updated: 2022/03/07 10:20:09 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:39:07 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-size_t	ft_strlen(char *str)
-{
-	size_t	position;
-
-	position = 0;
-	while (str[position] != '\0')
-		position++;
-	return (position);
-}
 
 int	ft_len(long long n, int base)
 {

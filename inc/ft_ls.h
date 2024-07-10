@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/08 12:15:20 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:15:03 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct flags
 {
 	bool			long_format;	/* -l */
 	bool			recurs;			/* -R */
-	bool			hiden_files;	/* -a */
+	bool			hidden_files;	/* -a */
 	bool			reverse;		/* -r */
 	bool			sort_mtime;		/* -t */
 	bool			sort_atime;		/* -u */
@@ -96,9 +96,9 @@ void			ft_print_data(t_fileinfo *files, t_flags flags);
 
 //Utils
 int				ft_find(char **pstr, char *estr, char *tokens);
-size_t			ft_strlen(const char *str);
-void			*ft_memset(void *dest, int ch, size_t count);
-void			ft_printf(int fd, const char *fmt, ...);
+//size_t			ft_strlen(const char *str);
+//void			*ft_memset(void *dest, int ch, size_t count);
+//void			ft_printf(int fd, const char *fmt, ...);
 t_fileinfo		*ft_build_fileinfo(const char *name);
 void			ft_free_fileinfo(t_fileinfo *fileinfo);
 

@@ -6,11 +6,12 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/07/08 13:16:52 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:15:45 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
+#include "ft_printf.h"
 
 static void	ft_getopt(t_flags *flags, const char *str_flag)
 {
@@ -22,7 +23,7 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 		else if (*str_flag == 'R')
 			flags->recurs = true;
 		else if (*str_flag == 'a')
-			flags->hiden_files = true;
+			flags->hidden_files = true;
 		else if (*str_flag == 'r')
 			flags->reverse = true;
 		else if (*str_flag == 't')

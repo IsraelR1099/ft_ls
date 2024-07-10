@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:45:37 by irifarac          #+#    #+#             */
-/*   Updated: 2022/02/23 13:26:54 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:42:32 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (0);
 	counter = 0;
 	while (counter < len && start < ft_strlen(s))
-	{
-			ptr[counter++] = s[start++];
-	}
+		ptr[counter++] = s[start++];
 	ptr[counter] = '\0';
 	return (ptr);
 }

@@ -6,11 +6,12 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 11:38:33 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/08 12:28:23 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:29:22 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
+#include "ft_printf.h"
 
 static enum e_filetype	ft_get_filetype(t_fileinfo *tmp)
 {

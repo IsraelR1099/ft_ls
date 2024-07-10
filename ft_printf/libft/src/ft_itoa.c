@@ -6,7 +6,7 @@
 /*   By: irifarac <irifarac@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:31:16 by irifarac          #+#    #+#             */
-/*   Updated: 2022/02/04 13:06:25 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:43:02 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_itoa(int n)
 		*ptr = 0 + 48;
 	ptr[len] = '\0';
 	while (len--)
-	{	
+	{
 		ptr[len] = (nbr % 10) + 48;
 		nbr /= 10;
 	}

@@ -6,20 +6,24 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 10:04:24 by irifarac          #+#    #+#             */
-/*   Updated: 2024/05/13 20:12:51 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:28:15 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int	ft_putchar(char c)
+int	ft_putchar(int fd, char c)
 {
-	return (write(1, &c, 1));
+	if (fd < 0)
+		return (-1);
+	return (write(fd, &c, 1));
 }
 
-int	ft_putstr(char *str)
+int	ft_putstr(int fd, char *str)
 {
+	if (fd < 0)
+		return (-1);
 	if (str == NULL)
-		return (write(1, "(null)", 6));
-	return (write(1, str, ft_strlen(str)));
+		return (write(fd, "(null)", 6));
+	return (write(fd, str, ft_strlen(str)));
 }

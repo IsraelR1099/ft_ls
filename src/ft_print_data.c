@@ -6,13 +6,14 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/10 09:46:27 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:29:47 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
+#include "ft_printf.h"
 
-static int	ft_count_entries(t_fileinfo *tmp)
+static int	ft_count_entries(t_fileinfo *tmp, t_flags flags)
 {
 	DIR				*dirp;
 	struct dirent	*direntp;
@@ -26,7 +27,12 @@ static int	ft_count_entries(t_fileinfo *tmp)
 		ft_panic(NULL);
 	}
 	while ((direntp = readdir(dirp)) != NULL)
+	{
+		if (flags.hidden_files == false)
+			if (direntp->d_name[0] == '.')
+				continue ;
 		count++;
+	}
 	return (count);
 }
 
@@ -47,12 +53,15 @@ static void	ft_print_dir(t_fileinfo *tmp, t_flags flags, int entries)
 	}
 	while ((direntp = readdir(dirp)) != NULL)
 	{
+		if (flags.hidden_files == false)
+			if (direntp->d_name[0] == '.')
+				continue ;
 		array[i] = *direntp;
 		array_ptr[i] = &array[i];
 		i++;
 	}
 	for (int i = 0; i < entries; i++)
-		printf("entries name is %s\n", array_ptr[i]->d_name);
+		ft_printf(1, "entries name is %s\n", array_ptr[i]->d_name);
 	closedir(dirp);
 	(void)flags;
 }
@@ -75,7 +84,7 @@ void	ft_print_data(t_fileinfo *files, t_flags flags)
 		{
 			if (tmp->filetype == ft_dir)
 			{
-				entries = ft_count_entries(tmp);
+				entries = ft_count_entries(tmp, flags);
 				printf("total of entries %d\n", entries);
 				ft_print_dir(tmp, flags, entries);
 			}

@@ -6,13 +6,13 @@
 /*   By: irifarac <irifarac@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 13:10:07 by irifarac          #+#    #+#             */
-/*   Updated: 2022/03/07 10:21:32 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:43:39 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-int	ft_putunsigned(long long int n)
+int	ft_putunsigned(int fd, long long int n)
 {
 	unsigned int	number;
 	char			*ptr;
@@ -22,7 +22,7 @@ int	ft_putunsigned(long long int n)
 	{
 		number = UINT_MAX - n;
 		ptr = ft_print_itoa(number, 10);
-		ft_putstr(ptr);
+		ft_putstr(fd, ptr);
 		len = ft_strlen(ptr);
 		free(ptr);
 		return (len);
@@ -30,14 +30,14 @@ int	ft_putunsigned(long long int n)
 	else
 	{
 		ptr = ft_print_itoa(n, 10);
-		ft_putstr(ptr);
+		ft_putstr(fd, ptr);
 		len = ft_strlen(ptr);
 	}
 	free(ptr);
 	return (len);
 }
 
-int	ft_puthex(unsigned int n, int str)
+int	ft_puthex(int fd, unsigned int n, int str)
 {
 	char	*ptr;
 	size_t	position;
@@ -55,13 +55,13 @@ int	ft_puthex(unsigned int n, int str)
 		}
 		position++;
 	}
-	ft_putstr(ptr);
+	ft_putstr(fd, ptr);
 	len = ft_strlen(ptr);
 	free(ptr);
 	return (len);
 }
 
-int	ft_putptr(unsigned long long ptr)
+int	ft_putptr(int fd, unsigned long long ptr)
 {
 	char	*ptr2;
 	int		position;
@@ -78,8 +78,8 @@ int	ft_putptr(unsigned long long ptr)
 		}
 		position++;
 	}
-	ft_putstr("0x");
-	len = ft_putstr(ptr2);
+	ft_putstr(fd, "0x");
+	len = ft_putstr(fd, ptr2);
 	free(ptr2);
 	return (len + 2);
-}	
+}

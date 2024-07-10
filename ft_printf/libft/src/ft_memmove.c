@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 11:04:10 by irifarac          #+#    #+#             */
-/*   Updated: 2024/05/12 13:47:01 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:41:37 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	*ft_memmove(void *dest, const void *src, size_t count)
 	else
 	{
 		while (count--)
-		*new_dest++ = *new_src++;
+			*new_dest++ = *new_src++;
 	}
 	return (dest);
 }

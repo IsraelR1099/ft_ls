@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 13:30:47 by irifarac          #+#    #+#             */
-/*   Updated: 2024/05/12 20:18:46 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:37:28 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@
 # include <unistd.h>
 # include <limits.h>
 
-int		ft_printf(const char *str, ...);
-int		ft_specifier(va_list lst, int str);
-int		ft_putchar(char c);
-int		ft_putstr(char *str);
-int		ft_putunsigned(long long int n);
-int		ft_puthex(unsigned int n, int str);
-int		ft_putptr(unsigned long long ptr);
+int		ft_printf(int fd, const char *str, ...);
+int		ft_putchar(int fd, char c);
+int		ft_putstr(int fd, char *str);
+int		ft_putunsigned(int fd, long long int n);
+int		ft_puthex(int fd, unsigned int n, int str);
+int		ft_putptr(int fd, unsigned long long ptr);
 //Funciones de la libreria libft
 size_t	ft_strlen(char *str);
 char	*ft_print_itoa(long long n, int base);

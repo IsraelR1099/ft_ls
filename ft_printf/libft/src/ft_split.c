@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 18:24:32 by irifarac          #+#    #+#             */
-/*   Updated: 2024/05/12 17:27:33 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:41:56 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static size_t	ft_counter(char const *s, char c)
 		if (*buffer)
 			counter++;
 		while (*buffer && !(*buffer == c))
-				buffer += 1;
+			buffer += 1;
 	}
 	return (counter);
 }

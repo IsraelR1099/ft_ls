@@ -6,11 +6,12 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:04:58 by israel            #+#    #+#             */
-/*   Updated: 2024/07/03 21:41:12 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:24:06 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
+#include "libft.h"
 
 t_fileinfo	*ft_build_fileinfo(const char *name)
 {

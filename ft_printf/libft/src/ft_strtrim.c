@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 09:46:08 by irifarac          #+#    #+#             */
-/*   Updated: 2022/02/23 12:36:22 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:42:15 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!s1 || !set)
 		return (0);
 	while (*s1 && ft_strchr(set, *s1))
-			s1++;
+		s1++;
 	position = ft_strlen(s1);
 	while (position && ft_strchr(set, s1[position]))
 		position--;

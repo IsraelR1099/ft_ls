@@ -6,12 +6,13 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/08 11:18:32 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:31:21 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
-
+#include "libft.h"
+/*
 static char	*ft_strchr(const char *str, int ch)
 {
 	int	position;
@@ -52,7 +53,7 @@ size_t	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
-
+*/
 int	ft_find(char **pstr, char *estr, char *tokens)
 {
 	char	*tmp;
