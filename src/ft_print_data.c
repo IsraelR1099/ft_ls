@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/10 13:29:47 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:50:46 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ static int	ft_count_entries(t_fileinfo *tmp, t_flags flags)
 		if (flags.hidden_files == false)
 			if (direntp->d_name[0] == '.')
 				continue ;
+		if (flags.recurs == true)
+		{
+			if (tmp->filetype == ft_dir)
+				count++;
+		}
 		count++;
 	}
 	return (count);
@@ -61,7 +66,11 @@ static void	ft_print_dir(t_fileinfo *tmp, t_flags flags, int entries)
 		i++;
 	}
 	for (int i = 0; i < entries; i++)
+	{
+		if (S_ISDIR(array_ptr[i]->d_type))
+			printf("it's not a directory\n");
 		ft_printf(1, "entries name is %s\n", array_ptr[i]->d_name);
+	}
 	closedir(dirp);
 	(void)flags;
 }
