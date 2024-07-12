@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 11:38:33 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/10 12:29:22 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/12 09:44:28 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,6 @@ void	ft_getinfo(t_fileinfo **files)
 		tmp->filetype = ft_get_filetype(tmp);
 		if (tmp->filetype == ft_unknown)
 			ft_printf(2, "ft_ls: unknown file type\n");
-	/*	printf("filetype es %d\n", tmp->filetype);
-		printf("num of links %ld\n", tmp->stat.st_nlink);
-		printf("owner is %d\n", tmp->stat.st_uid);
-		printf("group is %d\n", tmp->stat.st_gid);
-		printf("size is %ld\n", tmp->stat.st_size);
-		printf("last modification time is %s", ctime(&tmp->stat.st_mtime));
-		printf("last access time is %s", ctime(&tmp->stat.st_atime));
-		printf("last status change time is %s", ctime(&tmp->stat.st_ctime));
-		printf("block size is %ld\n", tmp->stat.st_blksize);
-		printf("number of blocks allocated is %ld\n", tmp->stat.st_blocks);*/
 		tmp = tmp->next;
 	}
 }

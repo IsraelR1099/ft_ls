@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/10 13:15:03 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/12 12:59:56 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <time.h>
 # include <dirent.h>
 # include <sys/types.h>
+# include <pwd.h>
+# include <grp.h>
 
 //Structs
 

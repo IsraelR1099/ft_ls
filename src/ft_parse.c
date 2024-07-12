@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/07/10 13:15:45 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:05:34 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 static void	ft_getopt(t_flags *flags, const char *str_flag)
 {
-	printf("str flag es %s\n", str_flag);
 	while (*str_flag)
 	{
 		if (*str_flag == 'l')
@@ -35,7 +34,7 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 #ifdef BONUS
 		else if (*str_flag == 'g')
 		{
-			flags->print_owner = true;
+			flags->print_owner = false;
 			flags->long_format = true;
 		}
 		else if (*str_flag == 'f')
