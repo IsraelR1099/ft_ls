@@ -6,9 +6,17 @@
 #    By: irifarac <irifarac@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 13:46:45 by irifarac          #+#    #+#              #
-#    Updated: 2024/05/12 18:34:44 by israel           ###   ########.fr        #
+#    Updated: 2024/07/15 17:55:18 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# Colors
+
+RED := $(shell tput -Txterm setaf 1)
+GREEN := $(shell tput -Txterm setaf 2)
+YELLOW := $(shell tput -Txterm setaf 3)
+BLUE := $(shell tput -Txterm setaf 4)
+RESET := $(shell tput -Txterm sgr0)
 
 CREATION_LIB = ar -crs
 CFLAGS = -Wall -Werror -Wextra
@@ -38,6 +46,7 @@ SRC =	$(addprefix $(SRC_DIR)/, \
 	ft_strlcpy.c \
 	ft_strlen.c \
 	ft_strncmp.c \
+	ft_strcmp.c \
 	ft_strnstr.c \
 	ft_strrchr.c \
 	ft_tolower.c \
@@ -71,12 +80,12 @@ INCLUDE = $(SRC_DIR)/libft.h
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	@echo "Compilando"
+	@echo "$(YELLOW)Compilando $<$(RESET)"
 	gcc $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(INCLUDE)
 	$(CREATION_LIB) $(NAME) $(OBJ)
-	@echo "Compiling"
+	@echo "$(YELLOW)Compiling $(NAME)$(RESET)"
 
 all: $(NAME)
 
@@ -86,10 +95,12 @@ bonus : $(NAME) $(BONUS_OBJ)
 
 clean:
 	rm -f $(OBJ) $(BONUS_OBJ)
+	echo "$(RED)Cleaning object files $(NAME)$(RESET)"
 
 fclean: clean
 	rm -f $(NAME)
 	rm -rf $(OBJ_DIR)
+	echo "$(RED)Cleaning $(NAME)$(RESET)"
 
 re: fclean all
 

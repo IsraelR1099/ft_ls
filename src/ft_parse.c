@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/07/12 13:05:34 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:41:05 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,15 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 	}
 }
 
-t_fileinfo	*ft_parse(int argc, char **argv, t_flags *flags)
+//t_fileinfo	*ft_parse(int argc, char **argv, t_flags *flags)
+t_entry	*ft_parse(int argc, char **argv, t_flags *flags)
 {
 	int			i;
 	int			value;
 	t_fileinfo	*files;
 	t_fileinfo	*tmp;
 
-	i = 0;
+	i = 1;
 	value = 0;
 	files = NULL;
 	while (i < argc)
@@ -99,5 +100,5 @@ t_fileinfo	*ft_parse(int argc, char **argv, t_flags *flags)
 	}
 	if (!files)
 		files = ft_build_fileinfo(".");
-	return (files);
+	return ((t_entry *)files);
 }

@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/12 13:04:34 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:52:39 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,32 +123,35 @@ t_print_file(const char *name, const struct stat *stat, t_flags flags)
 		ft_printf(1 ,"%s", grp->gr_name);
 	}
 	ft_printf(1, " %s\n", name);
+	printf("file name: %s\n", files->name);
 }
 
-static void
-ft_iter(t_fileinfo *tmp, t_flags flags, t_print *t_print_file)
+static struct stat
+ft_iter(t_fileinfo *tmp, t_flags flags)
 {
-	struct stat		tmpstat;
+//	struct stat		tmpstat;
 	int				n_entries;
 	DIR				*dirp;
 	struct dirent	*direntp;
 
 
-	if (lstat(tmp->name, &tmpstat) < 0)
+/*	if (lstat(tmp->name, &tmpstat) < 0)
 	{
 		ft_printf(2, "lstat error\n");
 		ft_panic(NULL);
 	}
 	if (S_ISDIR(tmpstat.st_mode) == 0)
 	{
-		t_print_file(tmp->name, &tmpstat, flags);
-		return ;
+		return (tmpstat);
+	}*/
+	if (tmp->filetype != ft_dir)
+	{
+		return (tmp->stat);
 	}
 #ifdef BONUS
 	if (flags.list_direc == true)
 	{
-		t_print_file(tmp->name, &tmpstat, flags);
-		return ;
+		return (tmpstat);
 	}
 #endif
 	n_entries = ft_count_entries(tmp, flags);
@@ -166,17 +169,34 @@ ft_iter(t_fileinfo *tmp, t_flags flags, t_print *t_print_file)
 		ft_printf(1, "name of entry %s\n", direntp->d_name);
 	}
 	ft_printf(1, "number of entries of this directory %d\n", n_entries);
-	(void)flags;
+	closedir(dirp);
+	return (tmpstat);
 }
 
-void	ft_print_data(t_fileinfo *files, t_flags flags)
+//void	ft_print_data(t_fileinfo *files, t_flags flags)
+void	ft_print_data(t_entry *files, t_flags flags)
 {
 	t_fileinfo	*tmp;
 
-	tmp = files;
+	tmp = (t_fileinfo *)files;
+	printf("entro en ft_print_data name es %s\n", tmp->name);
 	while (tmp)
 	{
-		ft_iter(tmp, flags, t_print_file);
+		tmp->stat = ft_iter(tmp, flags);
+		ft_printf(1, "file type %d\n", tmp->filetype);
+		tmp = tmp->next;
+	}
+	tmp = (t_fileinfo *)files;
+	while (tmp)
+	{
+		if (tmp->filetype == ft_dir)
+		{
+			ft_printf(1, "directory name %s\n", tmp->name);
+		}
+		else
+		{
+			t_print_file(tmp->name, &tmp->stat, flags);
+		}
 		tmp = tmp->next;
 	}
 }

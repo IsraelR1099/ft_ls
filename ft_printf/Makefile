@@ -6,9 +6,15 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 09:34:40 by irifarac          #+#    #+#              #
-#    Updated: 2024/05/13 20:45:02 by israel           ###   ########.fr        #
+#    Updated: 2024/07/15 17:53:17 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# Colors
+
+RED := $(shell tput -Txterm setaf 1)
+GREEN := $(shell tput -Txterm setaf 2)
+RESET := $(shell tput -Txterm sgr0)
 
 NAME := libftprintf.a
 LIBFT := libft
@@ -39,20 +45,20 @@ $(NAME): $(OBJ) includes/ft_printf.h libft/libft.a
 	@echo "ft_printf compiled"
 
 %.o: %.c includes/ft_printf.h libft/src/libft.h
-	@echo "Compiling"
+	@echo "$(GREEN)Compiling... $<$(RESET)"
 	gcc $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
 	rm -f $(DEP)
 	@make clean -C $(LIBFT)
-	@echo "ft_printf objets cleaned"
+	@echo "$(RED)ft_printf objets cleaned$(RESET)"
 
 fclean: clean
 	@make fclean -C $(LIBFT)
 	rm -f $(NAME)
 	rm -f $(LIBFT)/libft.a
-	@echo "executable files cleaned"
+	@echo "$(RED)executable files cleaned$(RESET)"
 
 re: fclean all
 

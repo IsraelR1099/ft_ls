@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/10 12:31:21 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/15 12:30:23 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,18 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 */
-int	ft_find(char **pstr, char *estr, char *tokens)
-{
-	char	*tmp;
 
-	tmp = *pstr;
-	while (tmp < estr && ft_strchr("\t\r\n\v ", *tmp))
-		tmp++;
-	*pstr = tmp;
-	return (*tmp && ft_strchr(tokens, *tmp));
-}
-
-void	ft_free_fileinfo(t_fileinfo *fileinfo)
+void	ft_free_fileinfo(t_entry *fileinfo)
 {
 	t_fileinfo	*tmp;
+	t_fileinfo	*cast;
 
-	while (fileinfo != NULL)
+	cast = (t_fileinfo *)fileinfo;
+	while (cast != NULL)
 	{
-		tmp = fileinfo;
-		fileinfo = fileinfo->next;
+		tmp = cast;
+		cast = cast->next;
+		free((char *)tmp->name);
 		free(tmp);
 	}
 }
