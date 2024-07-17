@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/16 20:33:56 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/17 09:30:58 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,19 @@ typedef struct flags
 typedef struct fileinfo
 {
 	enum e_filetype		filetype;
-	const char		*name;
-	char			*linkname;
-	struct stat		stat;
-	bool			linkok;
-	mode_t			linkmode;
-	struct fileinfo	*next;
+	const char			*name;
+	char				*linkname;
+	struct stat			stat;
+	bool				linkok;
+	mode_t				linkmode;
+	struct fileinfo		*next;
 }		t_fileinfo;
 
 typedef struct directory
 {
 	enum e_filetype		filetype;
-	const char		*name;
-	struct stat		stat;
+	const char			*name;
+	struct stat			stat;
 	struct directory	*next;
 }		t_directory;
 
