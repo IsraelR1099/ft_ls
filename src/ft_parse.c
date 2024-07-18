@@ -6,101 +6,50 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/07/17 13:33:40 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:39:17 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 #include "ft_printf.h"
 
-static void	ft_getopt(t_flags *flags, const char *str_flag)
-{
-	while (*str_flag)
-	{
-		if (*str_flag == 'l')
-			flags->long_format = true;
-		else if (*str_flag == 'R')
-			flags->recurs = true;
-		else if (*str_flag == 'a')
-			flags->hidden_files = true;
-		else if (*str_flag == 'r')
-			flags->reverse = true;
-		else if (*str_flag == 't')
-		{
-			flags->sort_mtime = true;
-			flags->sort_atime = false;
-			flags->time_type = time_mtime;
-		}
-#ifdef BONUS
-		else if (*str_flag == 'g')
-		{
-			flags->print_owner = false;
-			flags->long_format = true;
-		}
-		else if (*str_flag == 'f')
-		{
-			flags->no_sort = true;
-			flags->hiden_files = true;
-			if (flags->sort_mtime == false)
-				flags->reverse = false;
-		}
-		else if (*str_flag == 'd')
-			flags->list_direc = true;
-		else if (*str_flag == 'u')
-		{
-			flags->sort_atime = true;
-			flags->sort_mtime = false;
-			flags->time_type = time_atime;
-		}
-#endif
-		else if (*str_flag != '-')
-		{
-			ft_printf(2, "ft_ls: invalid option -- '%c'\n", *str_flag);
-			ft_panic(NULL);
-		}
-		str_flag++;
-	}
-}
-
-t_entry	*ft_parse(int argc, char **argv, t_flags *flags)
+void	ft_parse(int argc, char **argv, t_fileinfo **files, t_directory **dir)
 {
 	int			i;
-	int			value;
-	t_fileinfo	*files;
-	t_fileinfo	*tmp;
-	t_entry		*ret;
+	struct stat	statbuf;
+	//t_fileinfo	*tmp;
 
 	i = 1;
-	value = 0;
-	files = NULL;
-	ret = NULL;
 	while (i < argc)
 	{
-		value = ft_flags(argv[i]);
-		if (value == valid_flag)
-			ft_getopt(flags, argv[i]);
-		else if (value == not_valid_flag)
+		printf("argv[%d]: %s\n", i, argv[i]);
+		if (argv[i] == NULL)
 		{
-			ft_printf(1, "ft_ls: invalid option -- '%s'\n", argv[i]);
-			ft_panic(files);
+			i++;
+			continue ;
 		}
-		else if (value == file)
+		if (lstat(argv[i], &statbuf) == -1)
 		{
-			/*if (!files && i != 0)
-			{
-				files = ft_build_fileinfo(ret, argv[i]);
-				tmp = files;
-			}
-			else
-			{
-				tmp->next = ft_build_fileinfo(argv[i]);
-				tmp = tmp->next;
-			}*/
-			ret = ft_build_fileinfo(ret, argv[i]);
+			ft_printf(2, "ft_ls: %s: %s\n", argv[i], strerror(errno));
+			i++;
+			continue ;
+		}
+		if (S_ISDIR(statbuf.st_mode))
+		{
+			*dir = ft_build_dir(*dir, statbuf, argv[i]);
+			printf("dir->name: %s\n", (*dir)->name);
+		}
+		else
+		{
+			*files = ft_build_fileinfo(*files, statbuf, argv[i]);
+			printf("files->name: %s\n", (*files)->name);
 		}
 		i++;
 	}
-	if (!files)
-		files = ft_build_fileinfo(".");
-	return ((t_entry *)files);
+	if (!*dir && !*files)
+	{
+		if (lstat(".", &statbuf) == -1)
+			ft_printf(2, "ft_ls: %s\n", strerror(errno));
+		*dir = ft_build_dir(NULL, statbuf, ".");
+	}
 }

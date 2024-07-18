@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/17 13:35:28 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:33:55 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct directory
 	enum e_filetype		filetype;
 	const char			*name;
 	struct stat			stat;
+	struct fileinfo		*files;
 	struct directory	*next;
 }		t_directory;
 
@@ -102,9 +103,9 @@ typedef struct entry
 }		t_entry;
 
 // Flags
-//t_fileinfo		*ft_parse(int argc, char **argv, t_flags *flags);
-t_entry			*ft_parse(int argc, char **argv, t_flags *flags);
+void			ft_parse(int argc, char **argv, t_fileinfo **files, t_directory **dir);
 enum e_valid	ft_flags(const char *argv);
+void		ft_parse_flags(int argc, char **argv, t_flags *flags);
 
 // Get info
 void			ft_getinfo(t_fileinfo **files);
@@ -116,7 +117,8 @@ void			ft_print_data(t_entry *files, t_flags flags);
 //Utils
 int				ft_find(char **pstr, char *estr, char *tokens);
 void			ft_sort_files(t_entry **files, t_flags flags);
-t_fileinfo		*ft_build_fileinfo(t_entry *file, const char *name);
+t_directory		*ft_build_dir(t_directory *file, struct stat statbuf, const char *name);
+t_fileinfo		*ft_build_fileinfo(t_fileinfo *file, struct stat statbuf, const char *name);
 void			ft_free_fileinfo(t_entry *fileinfo);
 
 // Error
