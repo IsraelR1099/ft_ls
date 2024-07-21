@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/16 20:52:39 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/21 21:11:46 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 typedef void	t_print(const char *name, const struct stat *stat, t_flags flag);
 
-static int	ft_count_entries(t_fileinfo *tmp, t_flags flags)
+/*static int	ft_count_entries(t_fileinfo *tmp, t_flags flags)
 {
 	DIR				*dirp;
 	struct dirent	*direntp;
@@ -38,7 +38,7 @@ static int	ft_count_entries(t_fileinfo *tmp, t_flags flags)
 	return (count);
 }
 
-/*static void	t_print_dir(t_fileinfo *tmp, t_flags flags, int entries)
+static void	t_print_dir(t_fileinfo *tmp, t_flags flags, int entries)
 {
 	DIR				*dirp;
 	struct dirent	*direntp;
@@ -100,10 +100,24 @@ t_print_file(const char *name, const struct stat *stat, t_flags flags)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
+	char		*formatted_time;
 
 	if (flags.long_format == true)
 	{
-		ft_printf(1, (S_ISDIR(stat->st_mode)) ? "d" : "-" );
+		if (S_ISDIR(stat->st_mode))
+			ft_printf(1, "d");
+		else if (S_ISLNK(stat->st_mode))
+			ft_printf(1, "l");
+		else if (S_ISCHR(stat->st_mode))
+			ft_printf(1, "c");
+		else if (S_ISBLK(stat->st_mode))
+			ft_printf(1, "b");
+		else if (S_ISFIFO(stat->st_mode))
+			ft_printf(1, "p");
+		else if (S_ISSOCK(stat->st_mode))
+			ft_printf(1, "s");
+		else
+			ft_printf(1, "-");
 		ft_printf(1, (stat->st_mode & S_IRUSR) ? "r" : "-");
 		ft_printf(1, (stat->st_mode & S_IWUSR) ? "w" : "-");
 		ft_printf(1, (stat->st_mode & S_IXUSR) ? "x" : "-");
@@ -113,20 +127,27 @@ t_print_file(const char *name, const struct stat *stat, t_flags flags)
 		ft_printf(1, (stat->st_mode & S_IROTH) ? "r" : "-");
 		ft_printf(1, (stat->st_mode & S_IWOTH) ? "w" : "-");
 		ft_printf(1, (stat->st_mode & S_IXOTH) ? "x" : "-");
-		ft_printf(1,"%d", stat->st_nlink);
+		ft_printf(1," %d ", stat->st_nlink);
 		if (flags.print_owner == true)
 		{
 			pwd = getpwuid(stat->st_uid);
-			ft_printf(1, "%s", pwd->pw_name);
+			ft_printf(1, "%s ", pwd->pw_name);
 		}
 		grp = getgrgid(stat->st_gid);
-		ft_printf(1 ,"%s", grp->gr_name);
+		ft_printf(1 ,"%s ", grp->gr_name);
+		ft_printf(1, "%d ", stat->st_size);
+		formatted_time = ctime(&stat->st_mtime);
+		formatted_time[16] = '\0';
+		ft_printf(1, "%s ", formatted_time + 4);
+		ft_printf(1, "%s\n", name);
 	}
-	ft_printf(1, " %s\n", name);
-	printf("file name: %s\n", files->name);
+	else
+	{
+		ft_printf(1, "%s ", name);
+	}
 }
 
-static struct stat
+/*static struct stat
 ft_iter(t_fileinfo *tmp, t_flags flags)
 {
 //	struct stat		tmpstat;
@@ -135,7 +156,7 @@ ft_iter(t_fileinfo *tmp, t_flags flags)
 	struct dirent	*direntp;
 
 
-/*	if (lstat(tmp->name, &tmpstat) < 0)
+	if (lstat(tmp->name, &tmpstat) < 0)
 	{
 		ft_printf(2, "lstat error\n");
 		ft_panic(NULL);
@@ -143,7 +164,7 @@ ft_iter(t_fileinfo *tmp, t_flags flags)
 	if (S_ISDIR(tmpstat.st_mode) == 0)
 	{
 		return (tmpstat);
-	}*/
+	}
 	if (tmp->filetype != ft_dir)
 	{
 		return (tmp->stat);
@@ -171,32 +192,18 @@ ft_iter(t_fileinfo *tmp, t_flags flags)
 	ft_printf(1, "number of entries of this directory %d\n", n_entries);
 	closedir(dirp);
 	return (tmpstat);
-}
+}*/
 
-//void	ft_print_data(t_fileinfo *files, t_flags flags)
-void	ft_print_data(t_entry *files, t_flags flags)
+void	ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags)
 {
 	t_fileinfo	*tmp;
 
-	tmp = (t_fileinfo *)files;
-	printf("entro en ft_print_data name es %s\n", tmp->name);
+	tmp = files;
 	while (tmp)
 	{
-		tmp->stat = ft_iter(tmp, flags);
-		ft_printf(1, "file type %d\n", tmp->filetype);
+		t_print_file(tmp->name, &tmp->stat, flags);
 		tmp = tmp->next;
 	}
-	tmp = (t_fileinfo *)files;
-	while (tmp)
-	{
-		if (tmp->filetype == ft_dir)
-		{
-			ft_printf(1, "directory name %s\n", tmp->name);
-		}
-		else
-		{
-			t_print_file(tmp->name, &tmp->stat, flags);
-		}
-		tmp = tmp->next;
-	}
+	ft_printf(1, "\n");
+	(void)dir;
 }

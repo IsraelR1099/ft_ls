@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 20:23:27 by israel            #+#    #+#             */
-/*   Updated: 2024/07/17 20:48:33 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/19 17:56:20 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 				flags->reverse = false;
 		}
 		else if (*str_flag == 'd')
+		{
 			flags->list_direc = true;
+			flags->recurs = false;
+		}
 		else if (*str_flag == 'u')
 		{
 			flags->sort_atime = true;

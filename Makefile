@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/24 10:05:59 by irifarac          #+#    #+#              #
-#    Updated: 2024/07/17 20:42:03 by israel           ###   ########.fr        #
+#    Updated: 2024/07/19 12:43:22 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,9 @@ SRC = src/main.c \
 	  src/ft_error.c \
 	  src/ft_getinfo.c \
 	  src/ft_sort.c \
-	  src/ft_parse_flags.c
-	  #src/ft_print_data.c \
+	  src/ft_sort_dir.c \
+	  src/ft_parse_flags.c \
+	  src/ft_print_data.c
 
 OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
 DEP = $(patsubst %.c, %.d, $(SRC))
