@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:59:38 by israel            #+#    #+#             */
-/*   Updated: 2024/07/19 12:19:18 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/22 18:33:05 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,7 @@ static void	ft_sort_alpha(t_entry **dir)
 		while (tmp2)
 		{
 			if (ft_strcmp(tmp->name, tmp2->name) > 0)
-			{
-				printf("swap\n");
-				printf("tmp->name %s\n", tmp->name);
-				printf("tmp2->name %s\n", tmp2->name);
 				ft_swap_entries(tmp, tmp2);
-			}
 			tmp2 = tmp2->next;
 		}
 		tmp = tmp->next;
@@ -57,8 +52,6 @@ static void	ft_sort_alpha(t_entry **dir)
 
 void	ft_sort_dir(t_entry **dir, t_flags flags)
 {
-	for (t_directory *tmp = (t_directory *)*dir; tmp; tmp = tmp->next)
-		printf("name antes en sort %s\n", tmp->name);
 	if (flags.no_sort)
 		return ;
 	if (flags.sort_mtime)
@@ -73,6 +66,4 @@ void	ft_sort_dir(t_entry **dir, t_flags flags)
 	}
 	else
 		ft_sort_alpha(dir);
-	for (t_directory *tmp = (t_directory *)*dir; tmp; tmp = tmp->next)
-		printf("name despues en sort %s\n", tmp->name);
 }

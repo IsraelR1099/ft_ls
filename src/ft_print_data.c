@@ -6,16 +6,17 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/21 21:11:46 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/22 18:52:35 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 #include "ft_printf.h"
+#include "libft.h"
 
 typedef void	t_print(const char *name, const struct stat *stat, t_flags flag);
 
-/*static int	ft_count_entries(t_fileinfo *tmp, t_flags flags)
+/*static int	ft_count_entries(t_directory *tmp, t_flags flags)
 {
 	DIR				*dirp;
 	struct dirent	*direntp;
@@ -147,36 +148,17 @@ t_print_file(const char *name, const struct stat *stat, t_flags flags)
 	}
 }
 
-/*static struct stat
-ft_iter(t_fileinfo *tmp, t_flags flags)
+static void	ft_iter(const char *dir_name, t_flags flags)
 {
-//	struct stat		tmpstat;
-	int				n_entries;
+	//int				n_entries;
 	DIR				*dirp;
 	struct dirent	*direntp;
+	struct stat	statbuf;
+	char		*path;
 
-
-	if (lstat(tmp->name, &tmpstat) < 0)
-	{
-		ft_printf(2, "lstat error\n");
-		ft_panic(NULL);
-	}
-	if (S_ISDIR(tmpstat.st_mode) == 0)
-	{
-		return (tmpstat);
-	}
-	if (tmp->filetype != ft_dir)
-	{
-		return (tmp->stat);
-	}
-#ifdef BONUS
-	if (flags.list_direc == true)
-	{
-		return (tmpstat);
-	}
-#endif
-	n_entries = ft_count_entries(tmp, flags);
-	dirp = opendir(tmp->name);
+	//n_entries = ft_count_entries(tmp, flags);
+	ft_printf(1, "directory name is |%s|\n", dir_name);
+	dirp = opendir(dir_name);
 	if (!dirp)
 	{
 		ft_printf(2, "opendir error\n");
@@ -187,16 +169,43 @@ ft_iter(t_fileinfo *tmp, t_flags flags)
 		if (flags.hidden_files == false)
 			if (direntp->d_name[0] == '.')
 				continue ;
-		ft_printf(1, "name of entry %s\n", direntp->d_name);
+		path = (char *)malloc(ft_strlen(dir_name) + ft_strlen(direntp->d_name) + 2);
+		if (!path)
+		{
+			ft_printf(2, "malloc error\n");
+			ft_panic(NULL);
+		}
+		ft_strcpy(path, dir_name);
+		if (ft_strcmp(dir_name, "/") != 0)
+			ft_strcat(path, "/");
+		printf("and the path is |%s|\n", path);
+		ft_strcat(path, direntp->d_name);
+		ft_printf(1, "path is |%s|\n", path);
+		if (lstat(path, &statbuf) == -1)
+		{
+			ft_printf(2, "lstat error\n");
+			continue ;
+		}
+		t_print_file(direntp->d_name, &statbuf, flags);
+		if (flags.recurs && S_ISDIR(statbuf.st_mode) &&
+				ft_strcmp(direntp->d_name, ".") != 0 &&
+				ft_strcmp(direntp->d_name, "..") != 0)
+		{
+			ft_printf(1, "\n printo %s:\n", path);
+			ft_iter(path, flags);
+		}
+		free(path);
 	}
-	ft_printf(1, "number of entries of this directory %d\n", n_entries);
+	//ft_printf(1, "number of entries of this directory %d\n", n_entries);
 	closedir(dirp);
-	return (tmpstat);
-}*/
+}
 
 void	ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags)
 {
 	t_fileinfo	*tmp;
+	t_directory	*tmp_dir;
+	//t_fileinfo	*dir_files;
+	//t_directory	*dir_dir;
 
 	tmp = files;
 	while (tmp)
@@ -204,6 +213,13 @@ void	ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags)
 		t_print_file(tmp->name, &tmp->stat, flags);
 		tmp = tmp->next;
 	}
+	tmp_dir = dir;
+	while (tmp_dir)
+	{
+		ft_printf(1, "%s:\n", tmp_dir->name);
+		ft_iter(tmp_dir->name, flags);
+		t_print_file(tmp_dir->name, &tmp_dir->stat, flags);
+		tmp_dir = tmp_dir->next;
+	}
 	ft_printf(1, "\n");
-	(void)dir;
 }

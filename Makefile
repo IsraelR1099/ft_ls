@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/24 10:05:59 by irifarac          #+#    #+#              #
-#    Updated: 2024/07/19 12:43:22 by israel           ###   ########.fr        #
+#    Updated: 2024/07/22 08:39:52 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 # Bonus target
 bonus: CFLAGS += -DBONUS
-bonus: $(NAME)
+bonus: re
 
 clean:
 	rm -rf ./obj
