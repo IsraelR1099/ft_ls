@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/22 18:52:35 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/24 13:00:58 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft.h"
 
 typedef void	t_print(const char *name, const struct stat *stat, t_flags flag);
+static void	ft_iter(const char *dir_name, t_flags flags);
 
 /*static int	ft_count_entries(t_directory *tmp, t_flags flags)
 {
@@ -38,63 +39,37 @@ typedef void	t_print(const char *name, const struct stat *stat, t_flags flag);
 	}
 	return (count);
 }
+*/
 
-static void	t_print_dir(t_fileinfo *tmp, t_flags flags, int entries)
+static void	ft_recursion(const char *dir_name, t_fileinfo *files, t_flags flags)
 {
-	DIR				*dirp;
-	struct dirent	*direntp;
-	struct dirent	array[entries];
-	struct dirent	*array_ptr[entries];
-	int				i;
-
-	i = 0x0;
-	dirp = opendir(tmp->name);
-	if (!dirp)
-	{
-		t_printf(2, "opendir error\n");
-		ft_panic(NULL);
-	}
-	while ((direntp = readdir(dirp)) != NULL)
-	{
-		if (flags.hidden_files == false)
-			if (direntp->d_name[0] == '.')
-				continue ;
-		array[i] = *direntp;
-		array_ptr[i] = &array[i];
-		i++;
-	}
-	for (int i = 0; i < entries; i++)
-	{
-		if (S_ISDIR(array_ptr[i]->d_type))
-			printf("it's not a directory\n");
-		t_printf(1, "entries name is %s\n", array_ptr[i]->d_name);
-	}
-	closedir(dirp);
-	(void)flags;
-}
-
-void	t_print_data(t_fileinfo *files, t_flags flags)
-{
+	char		*path;
 	t_fileinfo	*tmp;
-	int			entries;
-
+	
 	tmp = files;
-	if (flags.long_format == false)
+	while (tmp)
 	{
-		while (tmp)
+		if (flags.recurs && S_ISDIR(tmp->stat.st_mode) &&
+				ft_strcmp(tmp->name, ".") != 0 &&
+				ft_strcmp(tmp->name, "..") != 0)
 		{
-			if (tmp->filetype == ft_dir)
+			path = (char *)malloc(ft_strlen(dir_name) +
+					ft_strlen(tmp->name) + 2);
+			if (!path)
 			{
-				entries = ft_count_entries(tmp, flags);
-				printf("total of entries %d\n", entries);
-				t_print_dir(tmp, flags, entries);
+				ft_printf(2, "malloc error\n");
+				ft_panic(NULL);
 			}
-			else
-				t_print_files(tmp, flags);
-			tmp = tmp->next;
+			ft_strcpy(path, dir_name);
+			if (dir_name[ft_strlen(dir_name) - 1] != '/')
+				ft_strcat(path, "/");
+			ft_strcat(path, tmp->name);
+			ft_iter(path, flags);
+			free(path);
 		}
+		tmp = tmp->next;
 	}
-}*/
+}
 
 static void
 t_print_file(const char *name, const struct stat *stat, t_flags flags)
@@ -144,20 +119,21 @@ t_print_file(const char *name, const struct stat *stat, t_flags flags)
 	}
 	else
 	{
-		ft_printf(1, "%s ", name);
+		ft_printf(1, "%s", name);
 	}
 }
 
 static void	ft_iter(const char *dir_name, t_flags flags)
 {
-	//int				n_entries;
 	DIR				*dirp;
 	struct dirent	*direntp;
 	struct stat	statbuf;
 	char		*path;
+	t_fileinfo	*files;
 
-	//n_entries = ft_count_entries(tmp, flags);
-	ft_printf(1, "directory name is |%s|\n", dir_name);
+	ft_memset(&files, 0, sizeof(t_fileinfo));
+	if (flags.recurs)
+		ft_printf(1,"%s:\n", dir_name);
 	dirp = opendir(dir_name);
 	if (!dirp)
 	{
@@ -175,51 +151,44 @@ static void	ft_iter(const char *dir_name, t_flags flags)
 			ft_printf(2, "malloc error\n");
 			ft_panic(NULL);
 		}
+		ft_memset(path, 0, sizeof(path));
 		ft_strcpy(path, dir_name);
-		if (ft_strcmp(dir_name, "/") != 0)
+		if (dir_name[ft_strlen(dir_name) - 1] != '/')
 			ft_strcat(path, "/");
-		printf("and the path is |%s|\n", path);
 		ft_strcat(path, direntp->d_name);
-		ft_printf(1, "path is |%s|\n", path);
 		if (lstat(path, &statbuf) == -1)
 		{
-			ft_printf(2, "lstat error\n");
+			ft_printf(2, "ft_ls: cannot access '%s': No such file or directory\n", path);
 			continue ;
 		}
-		t_print_file(direntp->d_name, &statbuf, flags);
-		if (flags.recurs && S_ISDIR(statbuf.st_mode) &&
-				ft_strcmp(direntp->d_name, ".") != 0 &&
-				ft_strcmp(direntp->d_name, "..") != 0)
-		{
-			ft_printf(1, "\n printo %s:\n", path);
-			ft_iter(path, flags);
-		}
+			files = ft_build_fileinfo(files, statbuf, direntp->d_name);
 		free(path);
 	}
-	//ft_printf(1, "number of entries of this directory %d\n", n_entries);
 	closedir(dirp);
+	ft_sort_files(&files, flags);
+	ft_print_data(files, NULL, flags);
+	if (flags.recurs)
+		ft_recursion(dir_name, files, flags);
+	write(1, "\n", 1);
 }
 
 void	ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags)
 {
 	t_fileinfo	*tmp;
 	t_directory	*tmp_dir;
-	//t_fileinfo	*dir_files;
-	//t_directory	*dir_dir;
 
 	tmp = files;
 	while (tmp)
 	{
 		t_print_file(tmp->name, &tmp->stat, flags);
+		if (flags.recurs == false)
+			write(1, " ", 1);
 		tmp = tmp->next;
 	}
 	tmp_dir = dir;
 	while (tmp_dir)
 	{
-		ft_printf(1, "%s:\n", tmp_dir->name);
 		ft_iter(tmp_dir->name, flags);
-		t_print_file(tmp_dir->name, &tmp_dir->stat, flags);
 		tmp_dir = tmp_dir->next;
 	}
-	ft_printf(1, "\n");
 }

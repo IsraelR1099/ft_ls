@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:59:38 by israel            #+#    #+#             */
-/*   Updated: 2024/07/19 17:31:22 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/24 11:27:38 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static void	ft_swap_entries(t_fileinfo *tmp, t_fileinfo *tmp2)
 	tmp2->stat = stat_temp;
 }
 
-static void	ft_sort_alpha(t_entry **files)
+static void	ft_sort_alpha(t_fileinfo **files)
 {
 	t_fileinfo	*tmp;
 	t_fileinfo	*tmp2;
 
-	tmp = (t_fileinfo *)*files;
+	tmp = *files;
 	while (tmp)
 	{
 		tmp2 = tmp->next;
@@ -46,7 +46,7 @@ static void	ft_sort_alpha(t_entry **files)
 	}
 }
 
-void	ft_sort_files(t_entry **files, t_flags flags)
+void	ft_sort_files(t_fileinfo **files, t_flags flags)
 {
 	if (flags.no_sort)
 		return ;
