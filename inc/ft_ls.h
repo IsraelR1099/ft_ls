@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/24 11:27:58 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/29 20:38:22 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <time.h>
 # include <dirent.h>
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <pwd.h>
 # include <grp.h>
 # include <errno.h>
@@ -117,7 +118,7 @@ void			ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags);
 //Utils
 int				ft_find(char **pstr, char *estr, char *tokens);
 void			ft_sort_files(t_fileinfo **files, t_flags flags);
-void			ft_sort_dir(t_entry **files, t_flags flags);
+void			ft_sort_dir(t_directory **dir, t_flags flags);
 t_directory		*ft_build_dir(t_directory *file, struct stat statbuf, const char *name);
 t_fileinfo		*ft_build_fileinfo(t_fileinfo *file, struct stat statbuf, const char *name);
 void			ft_free_fileinfo(t_entry *fileinfo);

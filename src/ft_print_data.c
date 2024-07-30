@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/24 13:00:58 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/29 21:17:56 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	ft_recursion(const char *dir_name, t_fileinfo *files, t_flags flags)
 {
 	char		*path;
 	t_fileinfo	*tmp;
-	
+
 	tmp = files;
 	while (tmp)
 	{
@@ -72,55 +72,68 @@ static void	ft_recursion(const char *dir_name, t_fileinfo *files, t_flags flags)
 }
 
 static void
-t_print_file(const char *name, const struct stat *stat, t_flags flags)
+t_print_file(const char *name, const struct stat *statbuf, t_flags flags)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
 	char		*formatted_time;
+	char		target[1024] = {0};
+	ssize_t		len;
 
 	if (flags.long_format == true)
 	{
-		if (S_ISDIR(stat->st_mode))
+		if (S_ISDIR(statbuf->st_mode))
 			ft_printf(1, "d");
-		else if (S_ISLNK(stat->st_mode))
+		else if (S_ISLNK(statbuf->st_mode))
 			ft_printf(1, "l");
-		else if (S_ISCHR(stat->st_mode))
+		else if (S_ISCHR(statbuf->st_mode))
 			ft_printf(1, "c");
-		else if (S_ISBLK(stat->st_mode))
+		else if (S_ISBLK(statbuf->st_mode))
 			ft_printf(1, "b");
-		else if (S_ISFIFO(stat->st_mode))
+		else if (S_ISFIFO(statbuf->st_mode))
 			ft_printf(1, "p");
-		else if (S_ISSOCK(stat->st_mode))
+		else if (S_ISSOCK(statbuf->st_mode))
 			ft_printf(1, "s");
 		else
 			ft_printf(1, "-");
-		ft_printf(1, (stat->st_mode & S_IRUSR) ? "r" : "-");
-		ft_printf(1, (stat->st_mode & S_IWUSR) ? "w" : "-");
-		ft_printf(1, (stat->st_mode & S_IXUSR) ? "x" : "-");
-		ft_printf(1, (stat->st_mode & S_IRGRP) ? "r" : "-");
-		ft_printf(1, (stat->st_mode & S_IWGRP) ? "w" : "-");
-		ft_printf(1, (stat->st_mode & S_IXGRP) ? "x" : "-");
-		ft_printf(1, (stat->st_mode & S_IROTH) ? "r" : "-");
-		ft_printf(1, (stat->st_mode & S_IWOTH) ? "w" : "-");
-		ft_printf(1, (stat->st_mode & S_IXOTH) ? "x" : "-");
-		ft_printf(1," %d ", stat->st_nlink);
+		ft_printf(1, (statbuf->st_mode & S_IRUSR) ? "r" : "-");
+		ft_printf(1, (statbuf->st_mode & S_IWUSR) ? "w" : "-");
+		ft_printf(1, (statbuf->st_mode & S_IXUSR) ? "x" : "-");
+		ft_printf(1, (statbuf->st_mode & S_IRGRP) ? "r" : "-");
+		ft_printf(1, (statbuf->st_mode & S_IWGRP) ? "w" : "-");
+		ft_printf(1, (statbuf->st_mode & S_IXGRP) ? "x" : "-");
+		ft_printf(1, (statbuf->st_mode & S_IROTH) ? "r" : "-");
+		ft_printf(1, (statbuf->st_mode & S_IWOTH) ? "w" : "-");
+		ft_printf(1, (statbuf->st_mode & S_IXOTH) ? "x" : "-");
+		ft_printf(1," %d ", statbuf->st_nlink);
 		if (flags.print_owner == true)
 		{
-			pwd = getpwuid(stat->st_uid);
+			pwd = getpwuid(statbuf->st_uid);
 			ft_printf(1, "%s ", pwd->pw_name);
 		}
-		grp = getgrgid(stat->st_gid);
+		grp = getgrgid(statbuf->st_gid);
 		ft_printf(1 ,"%s ", grp->gr_name);
-		ft_printf(1, "%d ", stat->st_size);
-		formatted_time = ctime(&stat->st_mtime);
+		ft_printf(1, "%d ", statbuf->st_size);
+		formatted_time = ctime(&statbuf->st_mtime);
 		formatted_time[16] = '\0';
 		ft_printf(1, "%s ", formatted_time + 4);
-		ft_printf(1, "%s\n", name);
+		if (S_ISLNK(statbuf->st_mode))
+		{
+			ft_printf(1, "%s -> ", name);
+			len = readlink(name, target, sizeof(target));
+			if (len == -1)
+			{
+				ft_printf(2, "readlink error", name);
+				ft_panic(NULL);
+			}
+			target[len] = '\0';
+			ft_printf(1, "%s\n", target);
+		}
+		else
+			ft_printf(1, "%s\n", name);
 	}
 	else
-	{
 		ft_printf(1, "%s", name);
-	}
 }
 
 static void	ft_iter(const char *dir_name, t_flags flags)
@@ -130,9 +143,11 @@ static void	ft_iter(const char *dir_name, t_flags flags)
 	struct stat	statbuf;
 	char		*path;
 	t_fileinfo	*files;
+	blkcnt_t	total_blocks;
 
 	ft_memset(&files, 0, sizeof(t_fileinfo));
-	if (flags.recurs)
+	total_blocks = 0;
+	//if (flags.recurs)
 		ft_printf(1,"%s:\n", dir_name);
 	dirp = opendir(dir_name);
 	if (!dirp)
@@ -161,11 +176,14 @@ static void	ft_iter(const char *dir_name, t_flags flags)
 			ft_printf(2, "ft_ls: cannot access '%s': No such file or directory\n", path);
 			continue ;
 		}
-			files = ft_build_fileinfo(files, statbuf, direntp->d_name);
+		files = ft_build_fileinfo(files, statbuf, direntp->d_name);
+		total_blocks += statbuf.st_blocks;
 		free(path);
 	}
 	closedir(dirp);
 	ft_sort_files(&files, flags);
+	if (flags.recurs == false)
+		ft_printf(1, "total %d\n", total_blocks / 2);
 	ft_print_data(files, NULL, flags);
 	if (flags.recurs)
 		ft_recursion(dir_name, files, flags);
@@ -178,13 +196,18 @@ void	ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags)
 	t_directory	*tmp_dir;
 
 	tmp = files;
+/*	for (t_fileinfo *tmpf = files; tmpf; tmpf = tmpf->next)
+	{
+		printf("name: %s\n", tmpf->name);
+	}*/
 	while (tmp)
 	{
 		t_print_file(tmp->name, &tmp->stat, flags);
-		if (flags.recurs == false)
+		if (flags.long_format == false)
 			write(1, " ", 1);
 		tmp = tmp->next;
 	}
+	write(1, "\n", 1);
 	tmp_dir = dir;
 	while (tmp_dir)
 	{

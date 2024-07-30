@@ -6,12 +6,13 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:29:26 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/24 13:11:31 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/07/29 20:39:22 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 #include "libft.h"
+#include "ft_printf.h"
 
 /*	printf("long format: %d\n", flags.long_format);
 	printf("recursive : %d\n", flags.recurs);
@@ -29,7 +30,6 @@ int	main(int argc, char **argv)
 	t_flags		flags;
 	t_fileinfo	*files;
 	t_directory	*dir;
-	t_entry		*entry;
 
 	ft_memset(&files, 0, sizeof(t_fileinfo));
 	ft_memset(&dir, 0, sizeof(t_directory));
@@ -38,8 +38,7 @@ int	main(int argc, char **argv)
 	ft_parse_flags(argc, argv, &flags);
 	ft_parse(argc, argv, &files, &dir);
 	ft_sort_files(&files, flags);
-	entry = (t_entry *)dir;
-	ft_sort_dir(&entry, flags);
+	ft_sort_dir(&dir, flags);
 	ft_print_data(files, dir, flags);
 	exit (0);
 }
