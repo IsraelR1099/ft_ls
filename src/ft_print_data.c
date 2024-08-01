@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/29 21:17:56 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/31 14:05:50 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ static void	ft_iter(const char *dir_name, t_flags flags)
 			ft_printf(2, "malloc error\n");
 			ft_panic(NULL);
 		}
-		ft_memset(path, 0, sizeof(path));
+		ft_memset(path, 0, ft_strlen(dir_name) + ft_strlen(direntp->d_name) + 2);
 		ft_strcpy(path, dir_name);
 		if (dir_name[ft_strlen(dir_name) - 1] != '/')
 			ft_strcat(path, "/");
@@ -187,6 +187,7 @@ static void	ft_iter(const char *dir_name, t_flags flags)
 	ft_print_data(files, NULL, flags);
 	if (flags.recurs)
 		ft_recursion(dir_name, files, flags);
+	ft_free_fileinfo(files);
 	write(1, "\n", 1);
 }
 

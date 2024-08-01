@@ -6,19 +6,34 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/19 12:15:06 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/31 13:08:01 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 #include "libft.h"
 
-void	ft_free_fileinfo(t_entry *fileinfo)
+void	ft_free_fileinfo(t_fileinfo *fileinfo)
 {
 	t_fileinfo	*tmp;
 	t_fileinfo	*cast;
 
-	cast = (t_fileinfo *)fileinfo;
+	cast = fileinfo;
+	while (cast != NULL)
+	{
+		tmp = cast;
+		cast = cast->next;
+		free((char *)tmp->name);
+		free(tmp);
+	}
+}
+
+void	ft_free_dir(t_directory *dir)
+{
+	t_directory	*tmp;
+	t_directory	*cast;
+
+	cast = dir;
 	while (cast != NULL)
 	{
 		tmp = cast;

@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:29:26 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/29 20:39:22 by israel           ###   ########.fr       */
+/*   Updated: 2024/07/31 21:42:21 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ int	main(int argc, char **argv)
 	flags.print_owner = true;
 	ft_parse_flags(argc, argv, &flags);
 	ft_parse(argc, argv, &files, &dir);
-	ft_sort_files(&files, flags);
+	if (files)
+		ft_sort_files(&files, flags);
 	ft_sort_dir(&dir, flags);
 	ft_print_data(files, dir, flags);
+	ft_free_fileinfo(files);
+	ft_free_dir(dir);
 	exit (0);
 }
