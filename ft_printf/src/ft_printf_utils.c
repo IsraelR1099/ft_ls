@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 10:07:43 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/10 12:39:07 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/04 21:21:25 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,4 @@ char	*ft_print_itoa(long long n, int base)
 	if (n < 0)
 		*ptr = '-';
 	return (ptr);
-}
-
-int	ft_tolower(int c)
-{
-	if ((c >= 65) && (c <= 90))
-		return (c + 32);
-	else
-		return (c);
 }

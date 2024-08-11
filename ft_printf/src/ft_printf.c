@@ -6,64 +6,66 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 12:31:25 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/10 12:52:35 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:57:01 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+#include "../libft/src/libft.h"
 
-static int	ft_specifier(int fd, va_list lst, int str)
+static int	ft_specifier(int fd, va_list lst, const char *str)
 {
 	int		result;
-	char	*ptr;
 
 	result = 0;
-	if (str == 'c')
+	if (ft_strncmp("c", str, 1) == 0)
 		result = ft_putchar(fd, va_arg(lst, int));
-	else if (str == 's')
+	else if (ft_strncmp("s", str, 1) == 0)
 		result = ft_putstr(fd, va_arg(lst, char *));
-	else if (str == 'p')
+	else if (ft_strncmp("p", str, 1) == 0)
 		result = ft_putptr(fd, va_arg(lst, unsigned long long));
-	else if (str == 'd' || str == 'i')
-	{
-		ptr = ft_print_itoa(va_arg(lst, int), 10);
-		result = ft_putstr(fd, ptr);
-		free(ptr);
-	}
-	else if (str == 'u')
+	else if (ft_strncmp("d", str, 1) == 0 || ft_strncmp("i", str, 1) == 0)
+		result = ft_putint(fd, va_arg(lst, int));
+	else if (ft_strncmp("ld", str, 2) == 0)
+		result = ft_putlong(fd, va_arg(lst, long));
+	else if (ft_strncmp("lld", str, 3) == 0)
+		result = ft_putlonglong(fd, va_arg(lst, long long));
+	else if (ft_strncmp("u", str, 1) == 0)
 		result = ft_putunsigned(fd, va_arg(lst, unsigned int));
-	else if (str == 'x' || str == 'X')
-		result = ft_puthex(fd, va_arg(lst, unsigned int), str);
-	else if (str == '%')
+	else if (ft_strncmp("x", str, 1) == 0 || ft_strncmp("X", str, 1) == 0)
+		result = ft_puthex(fd, va_arg(lst, unsigned int), *str);
+	else if (ft_strncmp("%", str, 1) == 0)
 		result = ft_putchar(fd, '%');
 	else
-		result = ft_putchar(fd, str);
+		result = ft_putchar(fd, *str);
 	return (result);
 }
 
 int	ft_printf(int fd, const char *str, ...)
 {
 	va_list	lst;
-	int		result;
 	int		ret;
 
 	va_start(lst, str);
-	result = 0;
 	ret = 0;
 	while (*str)
 	{
 		if (*str == '%')
 		{
-			ret = ft_specifier(fd, lst, *(str + 1));
-			str += 1;
+			ret += ft_specifier(fd, lst, str + 1);
+			if (ft_strncmp("ll", str + 1, 2) == 0)
+				str = str + 3;
+			else if (*(str + 1) == 'l')
+				str = str + 2;
+			else
+				str += 1;
 		}
 		else
-			ret = ft_putchar(fd, *str);
+			ret += ft_putchar(fd, *str);
 		if (ret == -1)
 			return (-1);
-		result += ret;
 		str += 1;
 	}
 	va_end(lst);
-	return (result);
+	return (ret);
 }

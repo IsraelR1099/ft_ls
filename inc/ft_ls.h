@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/31 13:04:27 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/03 21:18:52 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/sysmacros.h>
 # include <pwd.h>
 # include <grp.h>
 # include <errno.h>
@@ -82,7 +83,7 @@ typedef struct fileinfo
 {
 	enum e_filetype		filetype;
 	const char			*name;
-	char				*linkname;
+	const char			*fullpath;
 	struct stat			stat;
 	bool				linkok;
 	mode_t				linkmode;
@@ -120,7 +121,7 @@ int				ft_find(char **pstr, char *estr, char *tokens);
 void			ft_sort_files(t_fileinfo **files, t_flags flags);
 void			ft_sort_dir(t_directory **dir, t_flags flags);
 t_directory		*ft_build_dir(t_directory *file, struct stat statbuf, const char *name);
-t_fileinfo		*ft_build_fileinfo(t_fileinfo *file, struct stat statbuf, const char *name);
+t_fileinfo		*ft_build_fileinfo(t_fileinfo *file, struct stat statbuf, const char *name, const char *fullpath);
 void			ft_free_fileinfo(t_fileinfo *fileinfo);
 void			ft_free_dir(t_directory *dir);
 

@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:59:38 by israel            #+#    #+#             */
-/*   Updated: 2024/08/01 17:29:40 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/03 20:19:47 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	ft_sort_files(t_fileinfo **files, t_flags flags)
 		return ;
 	if (flags.sort_mtime)
 	{
-		printf("sort by mtime\n");
 		ft_sort_time(files);
 	}
 	else if (flags.sort_atime)

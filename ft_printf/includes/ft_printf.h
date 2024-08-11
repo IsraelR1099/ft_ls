@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 13:30:47 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/16 20:38:26 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/06 18:25:35 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ int		ft_len(long long n, int base);
 int		ft_tolower(int c);
 char	*ft_unsigned_itoa(unsigned long long n, int base);
 int		ft_unsigned_len(unsigned long long n, int base);
+long	ft_putlong(int fd, long n);
+int		ft_putlonglong(int fd, long long n);
+int		ft_putint(int fd, int n);
 
 #endif

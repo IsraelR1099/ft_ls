@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 18:04:49 by israel            #+#    #+#             */
-/*   Updated: 2024/07/22 18:06:47 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/04 21:05:23 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strcpy(char *dest, const char *src)
 {
-	char *temp;
+	char	*temp;
 
 	temp = dest;
 	while (*src)

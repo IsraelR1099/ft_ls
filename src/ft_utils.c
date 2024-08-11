@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/31 13:08:01 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/06 21:18:16 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_free_fileinfo(t_fileinfo *fileinfo)
 		tmp = cast;
 		cast = cast->next;
 		free((char *)tmp->name);
+		free((char *)tmp->fullpath);
 		free(tmp);
 	}
 }
@@ -49,6 +50,8 @@ enum e_valid	ft_flags(const char *argv)
 	char	*tmp;
 
 	if (!ft_strchr(argv, '-'))
+		return (file);
+	if (ft_strlen(argv) == 1 && *argv == '-')
 		return (file);
 	tmp = (char *)argv;
 	etmp = (char *)argv + ft_strlen(argv);

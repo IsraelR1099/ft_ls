@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 09:34:40 by irifarac          #+#    #+#              #
-#    Updated: 2024/07/15 17:53:17 by israel           ###   ########.fr        #
+#    Updated: 2024/08/06 18:24:15 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC := src/ft_printf.c \
 	src/ft_printf_utils.c \
 	src/ft_printf_string.c \
 	src/ft_printf_number.c \
+	src/ft_printf_longlong.c \
 	src/ft_printf_ptr.c
 
 OBJ := $(SRC:.c=.o)

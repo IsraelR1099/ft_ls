@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:59:38 by israel            #+#    #+#             */
-/*   Updated: 2024/07/29 20:39:48 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/03 20:20:20 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,28 @@ static void	ft_swap_entries(t_directory *tmp, t_directory *tmp2)
 
 static int	ft_compare_mtime(t_directory *a, t_directory *b)
 {
+#ifdef __linux__
+	if (a->stat.st_mtim.tv_sec > b->stat.st_mtim.tv_sec)
+		return (-1);
+	else if (a->stat.st_mtim.tv_sec < b->stat.st_mtim.tv_sec)
+		return (1);
+	else
+	{
+		if (a->stat.st_mtim.tv_nsec > b->stat.st_mtim.tv_nsec)
+			return (-1);
+		else if (a->stat.st_mtim.tv_nsec < b->stat.st_mtim.tv_nsec)
+			return (1);
+		else
+			return (ft_strcmp(a->name, b->name));
+	}
+#else
 	if (a->stat.st_mtime > b->stat.st_mtime)
 		return (-1);
 	else if (a->stat.st_mtime < b->stat.st_mtime)
 		return (1);
-	return (0);
+	else
+		return (ft_strcmp(a->name, b->name));
+#endif
 }
 
 static void	ft_sort_alpha(t_directory **dir)
@@ -103,7 +120,6 @@ void	ft_sort_dir(t_directory **dir, t_flags flags)
 	if (flags.sort_mtime)
 	{
 		ft_sort_time(dir);
-		printf("sort by time\n");
 	}
 	else if (flags.sort_atime)
 	{

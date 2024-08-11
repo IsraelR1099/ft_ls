@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:04:58 by israel            #+#    #+#             */
-/*   Updated: 2024/07/24 11:33:39 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:54:31 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_printf.h"
 
 t_fileinfo
-*ft_build_fileinfo(t_fileinfo *file, struct stat statbuf, const char *name)
+*ft_build_fileinfo(t_fileinfo *file, struct stat statbuf, const char *name, const char *fullpath)
 {
 	t_fileinfo	*fileinfo;
 
@@ -44,6 +44,8 @@ t_fileinfo
 		fileinfo->filetype = ft_reg;
 	else
 		fileinfo->filetype = ft_unknown;
+	if (fullpath)
+		fileinfo->fullpath = ft_strdup(fullpath);
 	fileinfo->next = file;
 	return (fileinfo);
 }

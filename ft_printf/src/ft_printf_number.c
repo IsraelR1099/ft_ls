@@ -6,12 +6,24 @@
 /*   By: irifarac <irifarac@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 13:10:07 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/17 20:45:57 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/04 21:22:07 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 #include "../libft/src/libft.h"
+
+int	ft_putint(int fd, int n)
+{
+	char	*ptr;
+	int		len;
+
+	ptr = ft_print_itoa(n, 10);
+	ft_putstr(fd, ptr);
+	len = ft_strlen(ptr);
+	free(ptr);
+	return (len);
+}
 
 int	ft_putunsigned(int fd, long long int n)
 {
@@ -34,6 +46,18 @@ int	ft_putunsigned(int fd, long long int n)
 		ft_putstr(fd, ptr);
 		len = ft_strlen(ptr);
 	}
+	free(ptr);
+	return (len);
+}
+
+long	ft_putlong(int fd, long n)
+{
+	char	*ptr;
+	int		len;
+
+	ptr = ft_print_itoa(n, 10);
+	ft_putstr(fd, ptr);
+	len = ft_strlen(ptr);
 	free(ptr);
 	return (len);
 }

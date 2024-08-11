@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 21:48:46 by israel            #+#    #+#             */
-/*   Updated: 2024/07/15 17:43:55 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/02 09:56:09 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	ft_panic(t_fileinfo *fileinfo)
 {
 	if (fileinfo)
-		ft_free_fileinfo((t_entry *)fileinfo);
+		ft_free_fileinfo(fileinfo);
 	exit(1);
 }

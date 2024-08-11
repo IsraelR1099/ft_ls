@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_printf_longlong.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 14:47:01 by israel            #+#    #+#             */
-/*   Updated: 2024/08/04 21:03:48 by israel           ###   ########.fr       */
+/*   Created: 2024/08/06 18:13:17 by israel            #+#    #+#             */
+/*   Updated: 2024/08/06 18:19:04 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/ft_printf.h"
+#include "../libft/src/libft.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	ft_putlonglong(int fd, long long n)
 {
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+	int		len;
+	char	*ptr;
+
+	ptr = ft_print_itoa(n, 10);
+	ft_putstr(fd, ptr);
+	len = ft_strlen(ptr);
+	free(ptr);
+	return (len);
 }
