@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/10 21:30:17 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/12 09:53:52 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ static void	ft_iter(const char *dir_name, t_flags flags, bool print_dir, size_t 
 	blkcnt_t	total_blocks;
 	static int	first_call = 1;
 
-	if (first_call && print_dir)
+	if (first_call && print_dir && flags.long_format)
 	{
 		if (count > 1)
 			ft_printf(1, "\n");
@@ -210,9 +210,7 @@ void	ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags)
 	print_dir = true;
 	count = 0;
 	for (t_directory *tmpd = dir; tmpd; tmpd = tmpd->next)
-	{
 		count++;
-	}
 	if (count == 1)
 	{
 		if (flags.long_format == true)
