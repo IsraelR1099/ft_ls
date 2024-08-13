@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/24 10:05:59 by irifarac          #+#    #+#              #
-#    Updated: 2024/07/22 08:39:52 by israel           ###   ########.fr        #
+#    Updated: 2024/08/12 21:24:14 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,26 +45,28 @@ SRC = src/main.c \
 
 OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
 DEP = $(patsubst %.c, %.d, $(SRC))
-INC = ./inc/ft_ls.h ./ft_printf/includes/ft_printf.h
+INC = ./inc/ft_ls.h
+INC_PRINTF = ./ft_printf/includes/ft_printf.h
+INC_LIBFT = ./ft_printf/libft/src/libft.h
 INC_DIRS = -I./inc -I./ft_printf/includes -I./ft_printf/libft/src
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(FT_PRINTF) $(INC)
+$(NAME): $(OBJ) $(FT_PRINTF)
 	@echo "$(GREEN)Creando ejecutable $@ $(RESET)"
 	gcc $(CFLAGS) $(OBJ) -L$(FT_PRINTF_DIR) -lftprintf -o $@
 	@echo "$(GREEN)Compilado $@ $(RESET)"
 
-$(FT_PRINTF): $(LIBFT)
+$(FT_PRINTF): $(FT_PRINTF_DIR)/src/*.c $(LIBFT) $(INC_PRINTF)
 	@$(MAKE) -C $(FT_PRINTF_DIR)
 
-$(LIBFT):
+$(LIBFT): $(LIBFT_DIR)/src/*.c $(INC_LIBFT)
 	@$(MAKE) -C $(LIBFT_DIR)
 
 
 -include $(DEP)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC)
 	@echo "$(GREEN)Compilando objeto $< $(RESET)"
 	@mkdir -p $(@D)
 	gcc $(CFLAGS) $(INC_DIRS) -o $@ -c $<

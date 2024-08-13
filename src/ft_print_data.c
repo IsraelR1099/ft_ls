@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/12 12:50:59 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:27:28 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,11 +171,16 @@ static void	ft_iter(const char *dir_name, t_flags flags, bool print_dir, size_t 
 			ft_printf(2, "ft_ls: cannot access '%s': No such file or directory\n", path);
 			continue ;
 		}
+		printf("antes name: %s\n", direntp->d_name);
 		files = ft_build_fileinfo(files, statbuf, direntp->d_name, dir_name);
 		total_blocks += statbuf.st_blocks;
 		free(path);
 	}
 	closedir(dirp);
+	for (t_fileinfo *tmp = files; tmp; tmp = tmp->next)
+	{
+		printf(" despues name: %s\n", tmp->name);
+	}
 	ft_sort_files(&files, flags);
 	if (flags.long_format)
 		ft_printf(1, "total %lld\n", total_blocks / 2);

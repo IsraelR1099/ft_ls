@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 09:34:40 by irifarac          #+#    #+#              #
-#    Updated: 2024/08/06 18:24:15 by israel           ###   ########.fr        #
+#    Updated: 2024/08/12 21:04:05 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 
 RED := $(shell tput -Txterm setaf 1)
 GREEN := $(shell tput -Txterm setaf 2)
+BLUE := $(shell tput -Txterm setaf 4)
 RESET := $(shell tput -Txterm sgr0)
 
 NAME := libftprintf.a
@@ -43,10 +44,10 @@ $(NAME): $(OBJ) includes/ft_printf.h libft/libft.a
 	@cp libft/libft.a .
 	@mv libft.a $(NAME)
 	@$(AR) $(NAME) $(OBJ)
-	@echo "ft_printf compiled"
+	@echo "$(BLUE)ft_printf compiled$(RESET)"
 
 %.o: %.c includes/ft_printf.h libft/src/libft.h
-	@echo "$(GREEN)Compiling... $<$(RESET)"
+	@echo "$(BLUE)Compiling... $<$(RESET)"
 	gcc $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:59:38 by israel            #+#    #+#             */
-/*   Updated: 2024/08/03 20:20:20 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/13 15:09:55 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,32 @@ static int	ft_compare_mtime(t_directory *a, t_directory *b)
 #endif
 }
 
+static int	ft_compare_atime(t_directory *a, t_directory *b)
+{
+#ifdef __linux__
+	if (a->stat.st_atim.tv_sec > b->stat.st_atim.tv_sec)
+		return (-1);
+	else if (a->stat.st_atim.tv_sec < b->stat.st_atim.tv_sec)
+		return (1);
+	else
+	{
+		if (a->stat.st_atim.tv_nsec > b->stat.st_atim.tv_nsec)
+			return (-1);
+		else if (a->stat.st_atim.tv_nsec < b->stat.st_atim.tv_nsec)
+			return (1);
+		else
+			return (ft_strcmp(a->name, b->name));
+	}
+#else
+	if (a->stat.st_atime > b->stat.st_atime)
+		return (-1);
+	else if (a->stat.st_atime < b->stat.st_atime)
+		return (1);
+	else
+		return (ft_strcmp(a->name, b->name));
+#endif
+}
+
 static void	ft_sort_alpha(t_directory **dir)
 {
 	t_directory	*tmp;
@@ -95,6 +121,25 @@ static void	ft_sort_time(t_directory **dir)
 	}
 }
 
+static void	ft_sort_atime(t_directory **dir)
+{
+	t_directory	*tmp;
+	t_directory	*tmp2;
+
+	tmp = *dir;
+	while (tmp)
+	{
+		tmp2 = tmp->next;
+		while (tmp2)
+		{
+			if (ft_compare_atime(tmp, tmp2) > 0)
+				ft_swap_entries(tmp, tmp2);
+			tmp2 = tmp2->next;
+		}
+		tmp = tmp->next;
+	}
+}
+
 static void	ft_reverse_dir(t_directory **dir)
 {
 	t_directory	*tmp;
@@ -123,7 +168,7 @@ void	ft_sort_dir(t_directory **dir, t_flags flags)
 	}
 	else if (flags.sort_atime)
 	{
-		//ft_sort_atime(files);
+		ft_sort_atime(dir);
 		printf("sort by atime\n");
 	}
 	else

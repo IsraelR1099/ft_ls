@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 20:23:27 by israel            #+#    #+#             */
-/*   Updated: 2024/07/19 17:56:20 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/13 18:52:16 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 			flags->hidden_files = true;
 			if (flags->sort_mtime == false)
 				flags->reverse = false;
+			if (flags->long_format == true)
+				flags->long_format = false;
 		}
 		else if (*str_flag == 'd')
 		{
@@ -51,9 +53,12 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 		}
 		else if (*str_flag == 'u')
 		{
-			flags->sort_atime = true;
-			flags->sort_mtime = false;
-			flags->time_type = time_atime;
+			if (flags->long_format == true)
+			{
+				flags->sort_atime = true;
+				flags->sort_mtime = false;
+				flags->time_type = time_atime;
+			}
 		}
 #endif
 		else if (*str_flag != '-')
