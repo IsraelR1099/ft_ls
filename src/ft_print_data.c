@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/14 12:05:29 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:40:13 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,13 @@ t_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags)
 		ft_printf(1, "%s ", formatted_time + 4);
 		if (S_ISLNK(statbuf->st_mode))
 			ft_print_sbl(file);
+#ifdef BONUS
 		else
 			ft_printf(1, "%s\n", file->name);
+#else
+		else
+			ft_printf(1, "%s\n", file->name);
+#endif
 	}
 	else
 		ft_printf(1, "%s", file->name);
