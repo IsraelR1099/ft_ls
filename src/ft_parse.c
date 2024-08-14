@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/08/14 11:10:17 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/14 11:27:23 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ void	ft_parse(int argc, char **argv, t_fileinfo **files, t_directory **dir, t_fl
 	{
 		if (lstat(".", &statbuf) == -1)
 			ft_printf(2, "ft_ls: cannot access '%s': %s\n", ".", strerror(errno));
-		*dir = ft_build_dir(NULL, statbuf, ".");
+		if (flags.list_direc == false)
+			*dir = ft_build_dir(NULL, statbuf, ".");
+		else
+			*files = ft_build_fileinfo(NULL, statbuf, ".", NULL);
 	}
 }
