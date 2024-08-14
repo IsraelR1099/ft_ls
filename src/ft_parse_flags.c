@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 20:23:27 by israel            #+#    #+#             */
-/*   Updated: 2024/08/13 18:52:16 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/14 09:57:04 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 	while (*str_flag)
 	{
 		if (*str_flag == 'l')
+		{
+			if (flags->no_sort == true)
+				return ;
 			flags->long_format = true;
+		}
 		else if (*str_flag == 'R')
 			flags->recurs = true;
 		else if (*str_flag == 'a')

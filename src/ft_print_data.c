@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/13 21:27:28 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/14 10:55:20 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	ft_recursion(const char *dir_name, t_fileinfo *files, t_flags flags)
 }
 
 static void
-t_print_file(t_fileinfo *file, const struct stat *statbuf, t_flags flags)
+t_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
@@ -121,6 +121,18 @@ t_print_file(t_fileinfo *file, const struct stat *statbuf, t_flags flags)
 		ft_printf(1, "%s", file->name);
 }
 
+static void	ft_print_no_sort(struct stat statbuf, char *file, const char *dir_name, t_flags flags)
+{
+	t_fileinfo	*files;
+
+	files = ft_build_fileinfo(NULL, statbuf, file, dir_name);
+	t_print_file(files, &files->stat, flags);
+	write(1, " ", 1);
+	free((char *)files->name);
+	free((char *)files->fullpath);
+	free(files);
+}
+
 static void	ft_iter(const char *dir_name, t_flags flags, bool print_dir, size_t count)
 {
 	DIR				*dirp;
@@ -171,16 +183,14 @@ static void	ft_iter(const char *dir_name, t_flags flags, bool print_dir, size_t 
 			ft_printf(2, "ft_ls: cannot access '%s': No such file or directory\n", path);
 			continue ;
 		}
-		printf("antes name: %s\n", direntp->d_name);
-		files = ft_build_fileinfo(files, statbuf, direntp->d_name, dir_name);
+		if (flags.no_sort == true && flags.recurs == false)
+			ft_print_no_sort(statbuf, direntp->d_name, dir_name, flags);
+		else
+			files = ft_build_fileinfo(files, statbuf, direntp->d_name, dir_name);
 		total_blocks += statbuf.st_blocks;
 		free(path);
 	}
 	closedir(dirp);
-	for (t_fileinfo *tmp = files; tmp; tmp = tmp->next)
-	{
-		printf(" despues name: %s\n", tmp->name);
-	}
 	ft_sort_files(&files, flags);
 	if (flags.long_format)
 		ft_printf(1, "total %lld\n", total_blocks / 2);
@@ -198,10 +208,6 @@ void	ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags)
 	bool		print_dir;
 
 	tmp = files;
-/*	for (t_fileinfo *tmpf = files; tmpf; tmpf = tmpf->next)
-	{
-		printf("name: %s\n", tmpf->name);
-	}*/
 	while (tmp)
 	{
 		t_print_file(tmp, &tmp->stat, flags);
@@ -221,6 +227,10 @@ void	ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags)
 	if (count == 1)
 	{
 		if (flags.long_format == true && !files)
+			print_dir = false;
+		else if (flags.no_sort == true)
+			print_dir = false;
+		else if (flags.long_format == false)
 			print_dir = false;
 	}
 	while (tmp_dir)

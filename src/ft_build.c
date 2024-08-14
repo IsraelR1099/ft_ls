@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:04:58 by israel            #+#    #+#             */
-/*   Updated: 2024/08/07 20:54:31 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/14 10:25:00 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_fileinfo
 *ft_build_fileinfo(t_fileinfo *file, struct stat statbuf, const char *name, const char *fullpath)
 {
 	t_fileinfo	*fileinfo;
+	t_fileinfo	*current;
 
 	fileinfo = (t_fileinfo *)malloc(sizeof(t_fileinfo));
 	if (fileinfo == NULL)
@@ -46,14 +47,24 @@ t_fileinfo
 		fileinfo->filetype = ft_unknown;
 	if (fullpath)
 		fileinfo->fullpath = ft_strdup(fullpath);
-	fileinfo->next = file;
-	return (fileinfo);
+	if (file == NULL)
+	{
+		fileinfo->next = NULL;
+		return (fileinfo);
+	}
+	current = file;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = fileinfo;
+	fileinfo->next = NULL;
+	return (file);
 }
 
 t_directory
 *ft_build_dir(t_directory *dir, struct stat statbuf, const char *name)
 {
 	t_directory	*directory;
+	t_directory	*current;
 
 	directory = (t_directory *)malloc(sizeof(t_directory));
 	if (directory == NULL)
@@ -79,6 +90,15 @@ t_directory
 		directory->filetype = ft_reg;
 	else
 		directory->filetype = ft_unknown;
-	directory->next = dir;
-	return (directory);
+	if (dir == NULL)
+	{
+		directory->next = NULL;
+		return (directory);
+	}
+	current = dir;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = directory;
+	directory->next = NULL;
+	return (dir);
 }
