@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/14 10:55:20 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:05:29 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,35 @@ static void	ft_recursion(const char *dir_name, t_fileinfo *files, t_flags flags)
 	}
 }
 
+static void	ft_print_sbl(t_fileinfo *file)
+{
+	char	target[1024] = {0};
+	char	path[1024] = {0};
+	ssize_t	len;
+
+	len = 0;
+	ft_strcpy(path, file->fullpath);
+	if (ft_strcmp(path, "/") != 0)
+		ft_strcat(path, "/");
+	ft_strcat(path, file->name);
+	ft_printf(1, "%s -> ", file->name);
+	len = readlink(path, target, sizeof(target));
+	if (len < 0)
+	{
+		ft_printf(2, "readlink error: %s\n", strerror(errno));
+		return ;
+	}
+	target[len] = '\0';
+	ft_printf(1, "%s\n", target);
+}
+
 static void
 t_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
 	char		*formatted_time;
-	char		target[1024] = {0};
-	ssize_t		len;
-	char		path[1024] = {0};
 
-	len = 0;
 	if (flags.long_format == true)
 	{
 		if (S_ISDIR(statbuf->st_mode))
@@ -99,21 +117,7 @@ t_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags)
 		formatted_time[16] = '\0';
 		ft_printf(1, "%s ", formatted_time + 4);
 		if (S_ISLNK(statbuf->st_mode))
-		{
-			ft_strcpy(path, file->fullpath);
-			if (ft_strcmp(path, "/") != 0)
-				ft_strcat(path, "/");
-			ft_strcat(path, file->name);
-			ft_printf(1, "%s -> ", file->name);
-			len = readlink(path, target, sizeof(target));
-			if (len == -1)
-			{
-				ft_printf(2, "readlink error: %s\n", strerror(errno));
-				return ;
-			}
-			target[len] = '\0';
-			ft_printf(1, "%s\n", target);
-		}
+			ft_print_sbl(file);
 		else
 			ft_printf(1, "%s\n", file->name);
 	}
