@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:29:26 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/31 21:42:21 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/14 11:10:04 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,6 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-/*	printf("long format: %d\n", flags.long_format);
-	printf("recursive : %d\n", flags.recurs);
-	printf("hidden    : %d\n", flags.hidden_files);
-	printf("reverse   : %d\n", flags.reverse);
-	printf("sort time : %d\n", flags.sort_mtime);
-	printf("sort atime : %d\n", flags.sort_atime);
-	printf("print owner: %d\n", flags.print_owner);
-	printf("no sort   : %d\n", flags.no_sort);
-	printf("list directories: %d\n", flags.list_direc);*/
-
-	//ft_free_fileinfo(files);
 int	main(int argc, char **argv)
 {
 	t_flags		flags;
@@ -36,7 +25,7 @@ int	main(int argc, char **argv)
 	ft_memset(&flags, 0, sizeof(t_flags));
 	flags.print_owner = true;
 	ft_parse_flags(argc, argv, &flags);
-	ft_parse(argc, argv, &files, &dir);
+	ft_parse(argc, argv, &files, &dir, flags);
 	if (files)
 		ft_sort_files(&files, flags);
 	ft_sort_dir(&dir, flags);

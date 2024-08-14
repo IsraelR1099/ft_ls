@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/03 21:18:52 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/14 11:10:39 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct entry
 }		t_entry;
 
 // Flags
-void			ft_parse(int argc, char **argv, t_fileinfo **files, t_directory **dir);
+void			ft_parse(int argc, char **argv, t_fileinfo **files, t_directory **dir, t_flags flags);
 enum e_valid	ft_flags(const char *argv);
 void		ft_parse_flags(int argc, char **argv, t_flags *flags);
 

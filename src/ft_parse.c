@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 18:34:42 by israel            #+#    #+#             */
-/*   Updated: 2024/08/07 20:54:19 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/14 11:10:17 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_count_files(int argc, char **argv)
 	return (count);
 }
 
-void	ft_parse(int argc, char **argv, t_fileinfo **files, t_directory **dir)
+void	ft_parse(int argc, char **argv, t_fileinfo **files, t_directory **dir, t_flags flags)
 {
 	int			i;
 	struct stat	statbuf;
@@ -47,7 +47,8 @@ void	ft_parse(int argc, char **argv, t_fileinfo **files, t_directory **dir)
 			i++;
 			continue ;
 		}
-		if (S_ISDIR(statbuf.st_mode))
+		if (S_ISDIR(statbuf.st_mode)
+				&& flags.list_direc == false)
 			*dir = ft_build_dir(*dir, statbuf, argv[i]);
 		else
 			*files = ft_build_fileinfo(*files, statbuf, argv[i], "./");
