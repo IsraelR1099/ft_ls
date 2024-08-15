@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/06 21:18:16 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/15 21:25:13 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,34 @@ enum e_valid	ft_flags(const char *argv)
 		tmp++;
 	}
 	return (valid_flag);
+}
+
+size_t	ft_max_len(t_fileinfo *files, t_directory *dir)
+{
+	size_t	max_len;
+	size_t	len_file;
+	size_t	len_dir;
+	t_fileinfo	*tmp;
+	t_directory	*tmp_dir;
+
+	max_len = 0;
+	len_file = 0;
+	tmp = files;
+	while (tmp != NULL)
+	{
+		len_file = ft_strlen(tmp->name);
+		if (len_file > max_len)
+			max_len = len_file;
+		tmp = tmp->next;
+	}
+	len_dir = 0;
+	tmp_dir = dir;
+	while (tmp_dir != NULL)
+	{
+		len_dir = ft_strlen(tmp_dir->name);
+		if (len_dir > max_len)
+			max_len = len_dir;
+		tmp_dir = tmp_dir->next;
+	}
+	return (max_len);
 }

@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:19:34 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/14 11:10:39 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/15 21:54:30 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <grp.h>
 # include <errno.h>
 # include <string.h>
+# include <sys/ioctl.h>
 
 //Structs
 
@@ -115,6 +116,7 @@ void			ft_getinfo(t_fileinfo **files);
 // Print data
 //void			ft_print_data(t_fileinfo *files, t_flags flags);
 void			ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags);
+void			ft_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags);
 
 //Utils
 int				ft_find(char **pstr, char *estr, char *tokens);
@@ -124,6 +126,9 @@ t_directory		*ft_build_dir(t_directory *file, struct stat statbuf, const char *n
 t_fileinfo		*ft_build_fileinfo(t_fileinfo *file, struct stat statbuf, const char *name, const char *fullpath);
 void			ft_free_fileinfo(t_fileinfo *fileinfo);
 void			ft_free_dir(t_directory *dir);
+void			ft_print_colors(const char *name, struct stat *statbuf);
+size_t			ft_max_len(t_fileinfo *files, t_directory *dir);
+void			ft_iter_file(t_fileinfo *files, t_flags flags, size_t max_len);
 
 // Error
 void			ft_panic(t_fileinfo *fileinfo);

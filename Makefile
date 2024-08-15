@@ -6,7 +6,7 @@
 #    By: irifarac <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/24 10:05:59 by irifarac          #+#    #+#              #
-#    Updated: 2024/08/12 21:24:14 by israel           ###   ########.fr        #
+#    Updated: 2024/08/15 21:54:49 by israel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,9 @@ SRC = src/main.c \
 	  src/ft_sort.c \
 	  src/ft_sort_dir.c \
 	  src/ft_parse_flags.c \
+	  src/ft_print_colors.c \
+	  src/ft_print_file.c \
+	  src/ft_iter.c \
 	  src/ft_print_data.c
 
 OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
