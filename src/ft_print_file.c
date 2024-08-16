@@ -6,15 +6,16 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 21:38:07 by israel            #+#    #+#             */
-/*   Updated: 2024/08/15 21:43:10 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/16 10:12:57 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_ls.h"
 #include "ft_printf.h"
 #include "libft.h"
+#include "../inc/colors.h"
 
-static void	ft_print_sbl(t_fileinfo *file)
+static void	ft_print_sbl(t_fileinfo *file, t_flags flags)
 {
 	char	target[1024] = {0};
 	char	path[1024] = {0};
@@ -25,7 +26,7 @@ static void	ft_print_sbl(t_fileinfo *file)
 	if (ft_strcmp(path, "/") != 0)
 		ft_strcat(path, "/");
 	ft_strcat(path, file->name);
-	ft_printf(1, "%s -> ", file->name);
+	ft_printf(1, TC_YEL "%s -> " TC_NRM , file->name);
 	len = readlink(path, target, sizeof(target));
 	if (len < 0)
 	{
@@ -34,9 +35,10 @@ static void	ft_print_sbl(t_fileinfo *file)
 	}
 	target[len] = '\0';
 #ifdef BONUS
-	ft_print_colors(target, &file->stat);
+	ft_print_colors(target, &file->stat, flags);
 #else
 	ft_printf(1, "%s\n", target);
+	(void)flags;
 #endif
 }
 
@@ -87,16 +89,21 @@ void	ft_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags)
 		formatted_time[16] = '\0';
 		ft_printf(1, "%s ", formatted_time + 4);
 		if (S_ISLNK(statbuf->st_mode))
-			ft_print_sbl(file);
+			ft_print_sbl(file, flags);
 #ifdef BONUS
 		else
-			ft_print_colors(file->name, statbuf);
+			ft_print_colors(file->name, statbuf, flags);
 #else
 		else
 			ft_printf(1, "%s\n", file->name);
 #endif
 	}
+#ifdef BONUS
+	else
+		ft_print_colors(file->name, &file->stat, flags);
+#else
 	else
 		ft_printf(1, "%s", file->name);
+#endif
 }
 

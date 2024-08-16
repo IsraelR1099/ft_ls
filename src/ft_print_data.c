@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/15 21:59:30 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/16 10:47:32 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,11 @@ void	ft_print_data(t_fileinfo *files, t_directory *dir, t_flags flags)
 	size_t		count;
 	bool		print_dir;
 	size_t		max_len;
+	size_t		n_files;
 
 	max_len = ft_max_len(files, dir);
-	ft_iter_file(files, flags, max_len);
+	n_files = ft_count(files, dir);
+	ft_iter_file(files, flags, max_len, n_files);
 	if (flags.long_format == false && files)
 		write(1, "\n", 1);
 	tmp_dir = dir;

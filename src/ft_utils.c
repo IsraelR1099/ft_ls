@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:33:06 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/15 21:25:13 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/16 10:46:59 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,16 @@ size_t	ft_max_len(t_fileinfo *files, t_directory *dir)
 		tmp_dir = tmp_dir->next;
 	}
 	return (max_len);
+}
+
+size_t	ft_count(t_fileinfo *files, t_directory *dir)
+{
+	size_t		count;
+
+	count = 0;
+	for (t_fileinfo *tmp = files; tmp != NULL; tmp = tmp->next)
+		count++;
+	for (t_directory *tmp_dir = dir; tmp_dir != NULL; tmp_dir = tmp_dir->next)
+		count++;
+	return (count);
 }
