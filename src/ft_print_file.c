@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 21:38:07 by israel            #+#    #+#             */
-/*   Updated: 2024/08/16 10:12:57 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:25:12 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ static void	ft_print_sbl(t_fileinfo *file, t_flags flags)
 	if (ft_strcmp(path, "/") != 0)
 		ft_strcat(path, "/");
 	ft_strcat(path, file->name);
+#ifdef BONUS
 	ft_printf(1, TC_YEL "%s -> " TC_NRM , file->name);
+#else
+	ft_printf(1, "%s -> ", file->name);
+#endif
 	len = readlink(path, target, sizeof(target));
 	if (len < 0)
 	{
@@ -42,11 +46,19 @@ static void	ft_print_sbl(t_fileinfo *file, t_flags flags)
 #endif
 }
 
+void	ft_print_time(struct stat *statbuf)
+{
+	char	*formatted_time;
+
+	formatted_time = ctime(&statbuf->st_mtime);
+	formatted_time[16] = '\0';
+	ft_printf(1, "%s ", formatted_time + 4);
+}
+
 void	ft_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
-	char		*formatted_time;
 
 	if (flags.long_format == true)
 	{
@@ -77,17 +89,21 @@ void	ft_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags)
 		if (flags.print_owner == true)
 		{
 			pwd = getpwuid(statbuf->st_uid);
-			ft_printf(1, "%s ", pwd->pw_name);
+			if (pwd == NULL)
+				ft_printf(1, "%d ", statbuf->st_uid);
+			else
+				ft_printf(1, "%s ", pwd->pw_name);
 		}
 		grp = getgrgid(statbuf->st_gid);
-		ft_printf(1 ,"%s ", grp->gr_name);
+		if (grp == NULL)
+			ft_printf(1, "%d ", statbuf->st_gid);
+		else
+			ft_printf(1 ,"%s ", grp->gr_name);
 		if (S_ISCHR(statbuf->st_mode) || S_ISBLK(statbuf->st_mode))
 			ft_printf(1, "%d, %d ", major(statbuf->st_rdev), minor(statbuf->st_rdev));
 		else
 			ft_printf(1, "%ld ", statbuf->st_size);
-		formatted_time = ctime(&statbuf->st_mtime);
-		formatted_time[16] = '\0';
-		ft_printf(1, "%s ", formatted_time + 4);
+		ft_print_time(statbuf);
 		if (S_ISLNK(statbuf->st_mode))
 			ft_print_sbl(file, flags);
 #ifdef BONUS

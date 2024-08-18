@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 21:26:20 by israel            #+#    #+#             */
-/*   Updated: 2024/08/16 13:28:09 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:31:48 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,7 @@ void	ft_iter_file(t_fileinfo *files, t_flags flags, size_t max_len, size_t n_fil
 		tmp = tmp->next;
 	}
 	(void)num_rows;
+	(void)col;
+	(void)row;
 #endif
 }

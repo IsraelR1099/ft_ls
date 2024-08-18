@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 11:53:57 by irifarac          #+#    #+#             */
-/*   Updated: 2024/08/16 10:47:32 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:49:09 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static void	ft_iter(const char *dir_name, t_flags flags, bool print_dir, size_t 
 	if (!dirp)
 	{
 		ft_printf(2, "ft_ls: cannot open directory '%s': %s\n", dir_name, strerror(errno));
-		ft_panic(NULL);
+		//ft_panic(NULL);
+		return ;
 	}
 	while ((direntp = readdir(dirp)) != NULL)
 	{
