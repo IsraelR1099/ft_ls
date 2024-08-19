@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 21:38:07 by israel            #+#    #+#             */
-/*   Updated: 2024/08/18 14:25:12 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/19 10:07:58 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,14 @@ static void	ft_print_sbl(t_fileinfo *file, t_flags flags)
 
 	len = 0;
 	ft_strcpy(path, file->fullpath);
+//	printf("fullpath es %s\n", file->fullpath);
+//	printf("path antes %s\n", path);
 	if (ft_strcmp(path, "/") != 0)
 		ft_strcat(path, "/");
+//	printf("path despues %s\n", path);
+//	printf("file name %s\n", file->name);
 	ft_strcat(path, file->name);
+//	printf("path despues %s\n", path);
 #ifdef BONUS
 	ft_printf(1, TC_YEL "%s -> " TC_NRM , file->name);
 #else
