@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 21:26:20 by israel            #+#    #+#             */
-/*   Updated: 2024/08/19 10:53:34 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/19 21:15:22 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-void	ft_iter_file(t_fileinfo *files, t_flags flags, size_t max_len, size_t n_files)
+void	ft_print_file_bonus(t_fileinfo *files, t_flags flags, size_t max_len, size_t n_files)
 {
-	t_fileinfo		*tmp;
-	struct winsize	ws;
+	struct winsize			ws;
 	int				num_columns;
 	int				num_rows;
 	int				row;
 	int				col;
+	t_fileinfo			*tmp;
+	t_fileinfo			*current;
 
 	if (!files)
 		return ;
@@ -35,7 +36,6 @@ void	ft_iter_file(t_fileinfo *files, t_flags flags, size_t max_len, size_t n_fil
 	if (num_columns == 0)
 		num_columns = 1;
 	num_rows = (n_files + num_columns - 1) / num_columns;
-#ifdef BONUS
 	for (row = 0; row < num_rows; row++)
 	{
 		tmp = files;
@@ -44,24 +44,48 @@ void	ft_iter_file(t_fileinfo *files, t_flags flags, size_t max_len, size_t n_fil
 			int index = row + col * num_rows;
 			int current_index = 0;
 
-			while (current_index < index && tmp)
+			current = tmp;
+			while (current_index < index && current)
 			{
-				tmp = tmp->next;
+				current = current->next;
 				current_index++;
 			}
-			if (tmp)
+			if (current)
 			{
-				ft_print_file(tmp, &tmp->stat, flags);
+				ft_print_file(current, &tmp->stat, flags);
 				if (col < num_columns - 1)
 				{
-					for (size_t space = ft_strlen(tmp->name); space <= max_len; space++)
+					for (size_t space = ft_strlen(current->name); space <= max_len; space++)
 						write(1, " ", 1);
 				}
 			}
 		}
 		write(1, "\n", 1);
 	}
+}
+
+void	ft_iter_file(t_fileinfo *files, t_flags flags, size_t max_len, size_t n_files)
+{
+	t_fileinfo		*tmp;
+
+	if (!files)
+		return ;
+#ifdef BONUS
+	if (flags.long_format == false)
+		ft_print_file_bonus(files, flags, max_len, n_files);
+	else
+	{
+		tmp = files;
+		while (tmp)
+		{
+			ft_print_file(tmp, &tmp->stat, flags);
+			if (flags.long_format == false)
+				write(1, " ", 1);
+			tmp = tmp->next;
+		}
+	}
 #else
+	tmp = files;
 	while (tmp)
 	{
 		ft_print_file(tmp, &tmp->stat, flags);
@@ -69,8 +93,7 @@ void	ft_iter_file(t_fileinfo *files, t_flags flags, size_t max_len, size_t n_fil
 			write(1, " ", 1);
 		tmp = tmp->next;
 	}
-	(void)num_rows;
-	(void)col;
-	(void)row;
+	(void)max_len;
+	(void)n_files;
 #endif
 }

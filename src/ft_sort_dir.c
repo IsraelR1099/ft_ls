@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 17:59:38 by israel            #+#    #+#             */
-/*   Updated: 2024/08/13 15:09:55 by israel           ###   ########.fr       */
+/*   Updated: 2024/08/20 18:47:11 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,14 +163,9 @@ void	ft_sort_dir(t_directory **dir, t_flags flags)
 	if (flags.no_sort)
 		return ;
 	if (flags.sort_mtime)
-	{
 		ft_sort_time(dir);
-	}
 	else if (flags.sort_atime)
-	{
 		ft_sort_atime(dir);
-		printf("sort by atime\n");
-	}
 	else
 		ft_sort_alpha(dir);
 	if (flags.reverse)

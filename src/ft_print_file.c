@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 21:38:07 by israel            #+#    #+#             */
-/*   Updated: 2024/08/19 12:27:35 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/20 22:01:13 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	ft_print_sbl(t_fileinfo *file, t_flags flags)
 #endif
 }
 
-void	ft_print_time(struct stat *statbuf)
+void	ft_print_time(struct stat *statbuf, t_flags flags)
 {
 	char	*formatted_time;
 	time_t	current_time;
@@ -59,9 +59,28 @@ void	ft_print_time(struct stat *statbuf)
 
 	current_time = time(NULL);
 	ft_strcpy(current_time_str, ctime(&current_time));
-	formatted_time = ctime(&statbuf->st_mtime);
-	formatted_time[16] = '\0';
-	ft_printf(1, "%s ", formatted_time + 4);
+	ft_strncpy(current_year, current_time_str + 20, 4);
+	current_year[4] = '\0';
+
+	if (flags.sort_mtime == true)
+		formatted_time = ctime(&statbuf->st_mtime);
+	else if (flags.sort_atime == true)
+		formatted_time = ctime(&statbuf->st_atime);
+	else
+		formatted_time = ctime(&statbuf->st_mtime);
+	ft_strncpy(file_year, formatted_time + 20, 4);
+	file_year[4] = '\0';
+
+	if (ft_strcmp(current_year, file_year) == 0)
+	{
+		formatted_time[16] = '\0';
+		ft_printf(1, "%s ", formatted_time + 4);
+	}
+	else
+	{
+		formatted_time[10] = '\0';
+		ft_printf(1, "%s %s ", formatted_time + 4, file_year);
+	}
 }
 
 void	ft_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags)
@@ -112,7 +131,7 @@ void	ft_print_file(t_fileinfo *file, struct stat *statbuf, t_flags flags)
 			ft_printf(1, "%d, %d ", major(statbuf->st_rdev), minor(statbuf->st_rdev));
 		else
 			ft_printf(1, "%ld ", statbuf->st_size);
-		ft_print_time(statbuf);
+		ft_print_time(statbuf, flags);
 		if (S_ISLNK(statbuf->st_mode))
 			ft_print_sbl(file, flags);
 #ifdef BONUS

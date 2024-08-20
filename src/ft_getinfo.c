@@ -6,7 +6,7 @@
 /*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 11:38:33 by irifarac          #+#    #+#             */
-/*   Updated: 2024/07/12 09:44:28 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/20 18:47:34 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	ft_getinfo(t_fileinfo **files)
 	tmp = *files;
 	while (tmp)
 	{
-		printf("name es: %s\n", tmp->name);
 		if (lstat(tmp->name, &tmp->stat) < 0)
 		{
 			ft_printf(2, "ft_ls: cannot access '%s': No such file or directory\n", tmp->name);

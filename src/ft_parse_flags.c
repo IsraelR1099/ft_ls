@@ -6,7 +6,7 @@
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 20:23:27 by israel            #+#    #+#             */
-/*   Updated: 2024/08/14 09:57:04 by irifarac         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:26:21 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	ft_getopt(t_flags *flags, const char *str_flag)
 		}
 		else if (*str_flag == 'u')
 		{
-			if (flags->long_format == true)
+			if (flags->long_format == true && flags->sort_mtime == true)
 			{
 				flags->sort_atime = true;
 				flags->sort_mtime = false;
