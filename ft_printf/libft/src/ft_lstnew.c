@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 21:48:46 by israel            #+#    #+#             */
-/*   Updated: 2024/08/02 09:56:09 by israel           ###   ########.fr       */
+/*   Created: 2022/02/08 13:10:11 by irifarac          #+#    #+#             */
+/*   Updated: 2022/02/08 13:39:18 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ls.h"
+#include "libft.h"
 
-void	ft_panic(t_fileinfo *fileinfo)
+t_list	*ft_lstnew(void *content)
 {
-	if (fileinfo)
-		ft_free_fileinfo(fileinfo);
-	exit(1);
+	t_list	*list;
+
+	list = (t_list *)malloc(sizeof(t_list));
+	if (!list)
+		return (0);
+	list->content = content;
+	list->next = NULL;
+	return (list);
 }

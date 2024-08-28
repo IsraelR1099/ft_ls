@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 21:48:46 by israel            #+#    #+#             */
-/*   Updated: 2024/08/02 09:56:09 by israel           ###   ########.fr       */
+/*   Created: 2022/02/02 11:06:29 by irifarac          #+#    #+#             */
+/*   Updated: 2022/02/02 13:40:11 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ls.h"
+#include "libft.h"
 
-void	ft_panic(t_fileinfo *fileinfo)
+void	ft_putnbr_fd(int n, int fd)
 {
-	if (fileinfo)
-		ft_free_fileinfo(fileinfo);
-	exit(1);
+	unsigned int	number;
+
+	number = n;
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		number = n * -1;
+	}
+	if (number >= 10)
+		ft_putnbr_fd(number / 10, fd);
+	ft_putchar_fd((char)(number % 10) + 48, fd);
 }

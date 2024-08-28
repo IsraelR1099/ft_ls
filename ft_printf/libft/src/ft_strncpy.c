@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 21:48:46 by israel            #+#    #+#             */
-/*   Updated: 2024/08/02 09:56:09 by israel           ###   ########.fr       */
+/*   Created: 2024/08/21 09:32:33 by irifarac          #+#    #+#             */
+/*   Updated: 2024/08/21 09:36:12 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ls.h"
+#include "libft.h"
 
-void	ft_panic(t_fileinfo *fileinfo)
+char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
-	if (fileinfo)
-		ft_free_fileinfo(fileinfo);
-	exit(1);
+	size_t	i;
+
+	i = 0;
+	while (src[i] != '\0' && i < n)
+	{
+		dest[i] = src[i];
+		++i;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }

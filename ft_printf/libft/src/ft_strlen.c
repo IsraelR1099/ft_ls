@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 21:48:46 by israel            #+#    #+#             */
-/*   Updated: 2024/08/02 09:56:09 by israel           ###   ########.fr       */
+/*   Created: 2022/01/10 14:08:10 by irifarac          #+#    #+#             */
+/*   Updated: 2024/05/12 17:50:07 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ls.h"
+#include "libft.h"
 
-void	ft_panic(t_fileinfo *fileinfo)
+size_t	ft_strlen(const char *str)
 {
-	if (fileinfo)
-		ft_free_fileinfo(fileinfo);
-	exit(1);
+	int	position;
+
+	position = 0;
+	while (str[position] != '\0')
+		position++;
+	return (position);
 }

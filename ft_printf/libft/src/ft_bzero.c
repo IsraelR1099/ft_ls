@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: irifarac <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 21:48:46 by israel            #+#    #+#             */
-/*   Updated: 2024/08/02 09:56:09 by israel           ###   ########.fr       */
+/*   Created: 2022/01/12 11:10:18 by irifarac          #+#    #+#             */
+/*   Updated: 2022/02/15 09:41:21 by irifarac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ls.h"
+#include "libft.h"
 
-void	ft_panic(t_fileinfo *fileinfo)
+void	ft_bzero(void *s, size_t n)
 {
-	if (fileinfo)
-		ft_free_fileinfo(fileinfo);
-	exit(1);
+	unsigned int	position;
+	char			*new_s;
+
+	new_s = (char *)s;
+	position = 0;
+	while (position < n)
+	{
+		new_s[position] = '\0';
+		position++;
+	}
 }

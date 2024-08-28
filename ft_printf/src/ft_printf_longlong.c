@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_printf_longlong.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: israel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 21:48:46 by israel            #+#    #+#             */
-/*   Updated: 2024/08/02 09:56:09 by israel           ###   ########.fr       */
+/*   Created: 2024/08/06 18:13:17 by israel            #+#    #+#             */
+/*   Updated: 2024/08/06 18:19:04 by israel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_ls.h"
+#include "../includes/ft_printf.h"
+#include "../libft/src/libft.h"
 
-void	ft_panic(t_fileinfo *fileinfo)
+int	ft_putlonglong(int fd, long long n)
 {
-	if (fileinfo)
-		ft_free_fileinfo(fileinfo);
-	exit(1);
+	int		len;
+	char	*ptr;
+
+	ptr = ft_print_itoa(n, 10);
+	ft_putstr(fd, ptr);
+	len = ft_strlen(ptr);
+	free(ptr);
+	return (len);
 }
